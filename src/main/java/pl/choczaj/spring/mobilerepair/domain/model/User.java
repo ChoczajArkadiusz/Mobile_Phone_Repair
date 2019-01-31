@@ -42,6 +42,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserRole> roles = new ArrayList<>();
 
+    public boolean hasRole(UserRoleEnum roleEnum) {
+        for (UserRole role : this.getRoles()) {
+            if (role.getRole() == roleEnum) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     public Long getId() {
         return id;
     }

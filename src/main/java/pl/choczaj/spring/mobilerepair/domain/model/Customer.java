@@ -11,7 +11,6 @@ public class Customer extends User {
     @OneToMany(mappedBy = "owner")
     private List<Device> devices = new LinkedList<>();
 
-
     public List<Device> getDevices() {
         return devices;
     }
