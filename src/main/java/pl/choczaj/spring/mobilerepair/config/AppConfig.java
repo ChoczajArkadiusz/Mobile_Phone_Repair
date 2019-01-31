@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pl.choczaj.spring.mobilerepair.web.converter.CustomerConverter;
 import pl.choczaj.spring.mobilerepair.web.converter.EmployeeConverter;
 import pl.choczaj.spring.mobilerepair.web.converter.PartConverter;
@@ -14,9 +14,7 @@ import pl.choczaj.spring.mobilerepair.web.converter.PartConverter;
 import javax.persistence.EntityManagerFactory;
 
 @Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "pl.choczaj.spring.mobilerepair")
-public class AppConfig extends WebMvcConfigurerAdapter {
+public class AppConfig implements WebMvcConfigurer {
 
     @Bean
     public EmployeeConverter employeeConverter() {
