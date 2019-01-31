@@ -34,6 +34,13 @@ public class EmployeeFormController {
         return "redirect:/";
     }
 
+    @GetMapping("/{id:[1-9]*[0-9]+}/edit")
+    public String prepareEditForm(@PathVariable Long id, Model model) {
+        model.addAttribute("employeeDto", employeeService.findById(id));
+        return "employees/form-dto";
+    }
+
+
 
 
 }

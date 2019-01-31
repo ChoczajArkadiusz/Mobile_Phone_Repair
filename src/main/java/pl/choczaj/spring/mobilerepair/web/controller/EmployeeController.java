@@ -9,6 +9,7 @@ import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
 import pl.choczaj.spring.mobilerepair.domain.service.EmployeeService;
+import pl.choczaj.spring.mobilerepair.email.EmailSender;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -23,9 +24,10 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, TaskRepository taskRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, TaskRepository taskRepository, EmployeeService employeeService) {
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
+        this.employeeService = employeeService;
     }
 
     @ModelAttribute("appRoles")
@@ -58,16 +60,10 @@ public class EmployeeController {
     @GetMapping("/{id:[1-9]*[0-9]+}/details")
     public String prepareDetailedView(@PathVariable Long id, Model model) {
         model.addAttribute("employee", employeeRepository.findById(id).orElse(null));
-//        model.addAttribute("tasks", employeeService.findAllTasksByEmployeeId(id));
+        model.addAttribute("tasks", employeeService.findAllTasksByEmployeeId(id));
         return "employees/details";
     }
 
-
-    @GetMapping("/{id:[1-9]*[0-9]+}/edit")
-    public String prepareEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("employee", employeeRepository.findById(id));
-        return "employees/add-edit-form";
-    }
 
     @GetMapping("/{id:[1-9]*[0-9]+}/confirm-delete")
     public String confirmDelete(@PathVariable Long id, Model model) {
