@@ -56,7 +56,7 @@
                         <td>${employee.workHourCost}</td>
                         <td>
                             <a href="/employees/${employee.id}/details" class="btn btn-xs btn-info">Szczegóły</a>
-                            <a href="/employees/${employee.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
+                            <a href="/employees/form/${employee.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
                             <a href="/employees/${employee.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
                         </td>
                     </tr>

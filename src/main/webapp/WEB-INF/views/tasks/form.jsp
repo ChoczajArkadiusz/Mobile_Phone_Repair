@@ -56,8 +56,6 @@
     </div>
     <br>
     <br>
-    <br>
-    <br>
     <div>
         <h3>Lista dostępnych części zamiennych do wybranego modelu</h3>
         <c:if test="${empty taskDto.parts}">
@@ -86,7 +84,7 @@
                         <td>Opcje</td>
                     </tr>
                     </thead>
-                    <tbody id="employeesTab">
+                    <tbody id="partsTab">
                     <c:forEach items="${taskDto.parts}" var="part" varStatus="i">
                         <tr>
                             <td>${i.index + 1}</td>
@@ -108,10 +106,64 @@
                 </table>
             </div>
         </c:if>
-
-
     </div>
-
 </div>
+<br>
+<div class="container" align="center">
+    <h3>Lista pracowników z dostępnym czasem</h3>
+
+    <c:if test="${empty employees}">
+        <div>
+            <p>---Brak wpisów w bazie danych---</p>
+        </div>
+    </c:if>
+    <c:if test="${not empty employees}">
+        <div align="center">
+            <p>Wyszukaj w tabeli:</p>
+            <input class="form-control" id="searchPhrase" type="text" placeholder="szukana fraza..">
+            <br>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <td>Lp.</td>
+                    <td>ID</td>
+                    <td>Email</td>
+                    <td>Koszt roboczogodziny [zł]</td>
+                    <td>Dostępność [h]</td>
+                    <td>Opcje</td>
+                </tr>
+                </thead>
+                <tbody id="employeesTab">
+                <c:forEach items="${employees}" var="employee" varStatus="i">
+                    <tr>
+                        <td>${i.index + 1}</td>
+                        <td>${employee.id}</td>
+                        <td>${employee.email}</td>
+                        <td>${employee.workHourCost}</td>
+                        <td>${employee.hours}</td>
+                        <td>
+                            <a href="/" class="btn btn-xs btn-info">Przypisz</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </c:if>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#searchPhrase").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#employeesTab tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+
 </body>
 </html>

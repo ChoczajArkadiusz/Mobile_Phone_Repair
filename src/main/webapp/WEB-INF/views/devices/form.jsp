@@ -50,18 +50,13 @@
                 <label class="control-label col-sm-4" for="description">Właściciel:</label>
                 <div class="col-sm-6">
                     <form:select path="owner" items="${deviceDto.customersEmails}" required="true" id="owner"
-                                 cssClass="form-control selectpicker"/>
+                                 cssClass="form-control selectpicker" data-live-search="true"/>
                     <p><strong><form:errors path="owner" cssClass="alert alert-danger"/></strong></p>
                 </div>
             </div>
-
             <p><input type="submit" value="Zapisz" class="btn btn-primary"/></p>
         </form:form>
     </div>
 </div>
-
-<select class="selectpicker" data-style="btn-info" data-live-search="true">
-</select>
-
 </body>
 </html>

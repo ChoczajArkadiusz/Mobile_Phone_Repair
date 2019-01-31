@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Szczegóły</title>
+    <title>Homepage</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,33 +16,8 @@
 <jsp:include page="../header.jsp"/>
 
 <div class="container" align="center">
-    <h2>Szczegóły urządzenia:</h2>
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Producent</td>
-            <td>Model</td>
-            <td>Opis</td>
-            <td>Właściciel</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>${device.id}</td>
-            <td>${device.manufacturer}</td>
-            <td>${device.model}</td>
-            <td>${device.description}</td>
-            <td>${device.owner.email}</td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="container" align="center">
-        <h3>Lista zadań dla wybranego urządzenia</h3>
+    <h3>Lista aktywnych zadań:</h3>
+    <div>
         <c:if test="${empty tasks}">
             <div>
                 <p>---Brak wpisów w bazie danych---</p>
@@ -59,6 +34,8 @@
                         <td>Zarejestrowano</td>
                         <td>Planowane rozp. naprawy</td>
                         <td>Pracownik</td>
+                        <td>Urządzenie</td>
+                        <td>Właściciel</td>
                         <td>Opis problemu</td>
                         <td>Status</td>
                         <td>Opcje</td>
@@ -70,11 +47,12 @@
                             <td>${task.registrationDate}</td>
                             <td>${task.scheduledRepairDate}</td>
                             <td>${task.employee.email}</td>
+                            <td>${task.device.manufacturer} ${task.device.model} </td>
+                            <td>${task.device.owner.email}</td>
                             <td>${task.problemDescription}</td>
                             <td>${task.status.name()}</td>
                             <td>
                                 <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -82,22 +60,8 @@
                 </table>
             </div>
         </c:if>
+
     </div>
-
-    <sec:authorize access="hasRole('ROLE_MANAGER')">
-        <div align="center">
-            <hr>
-            <form:form modelAttribute="device" action="/tasks/add" method="post">
-                <form:hidden path="id"/>
-                <form:hidden path="manufacturer"/>
-                <form:hidden path="model"/>
-                <form:hidden path="description"/>
-                <form:hidden path="owner"/>
-                <p><input type="submit" value="Dodaj nowe zlecenie" class="btn btn-primary"/></p>
-            </form:form>
-        </div>
-    </sec:authorize>
-
 </div>
 </body>
 </html>

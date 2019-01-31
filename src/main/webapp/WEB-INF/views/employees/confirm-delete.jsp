@@ -37,8 +37,8 @@
             <td>${toRemove.lastName}</td>
             <td>${toRemove.email}</td>
             <td>
-                <c:forEach items="${toRemove.roles}" var="role" varStatus="j">
-                    ${role}<br>
+                <c:forEach items="${employee.roles}" var="role" varStatus="j">
+                    ${role.role.name()}<br>
                 </c:forEach>
             </td>
             <td>${toRemove.workHourCost}</td>

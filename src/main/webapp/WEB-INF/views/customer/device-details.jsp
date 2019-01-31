@@ -24,7 +24,6 @@
             <td>Producent</td>
             <td>Model</td>
             <td>Opis</td>
-            <td>Właściciel</td>
         </tr>
         </thead>
         <tbody>
@@ -33,7 +32,6 @@
             <td>${device.manufacturer}</td>
             <td>${device.model}</td>
             <td>${device.description}</td>
-            <td>${device.owner.email}</td>
         </tr>
         </tbody>
     </table>
@@ -58,7 +56,6 @@
                     <tr>
                         <td>Zarejestrowano</td>
                         <td>Planowane rozp. naprawy</td>
-                        <td>Pracownik</td>
                         <td>Opis problemu</td>
                         <td>Status</td>
                         <td>Opcje</td>
@@ -69,12 +66,10 @@
                         <tr>
                             <td>${task.registrationDate}</td>
                             <td>${task.scheduledRepairDate}</td>
-                            <td>${task.employee.email}</td>
                             <td>${task.problemDescription}</td>
                             <td>${task.status.name()}</td>
                             <td>
-                                <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+
                             </td>
                         </tr>
                     </c:forEach>
@@ -83,20 +78,6 @@
             </div>
         </c:if>
     </div>
-
-    <sec:authorize access="hasRole('ROLE_MANAGER')">
-        <div align="center">
-            <hr>
-            <form:form modelAttribute="device" action="/tasks/add" method="post">
-                <form:hidden path="id"/>
-                <form:hidden path="manufacturer"/>
-                <form:hidden path="model"/>
-                <form:hidden path="description"/>
-                <form:hidden path="owner"/>
-                <p><input type="submit" value="Dodaj nowe zlecenie" class="btn btn-primary"/></p>
-            </form:form>
-        </div>
-    </sec:authorize>
 
 </div>
 </body>

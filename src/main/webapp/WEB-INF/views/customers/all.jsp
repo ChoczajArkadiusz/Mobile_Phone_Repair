@@ -1,6 +1,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,6 +14,23 @@
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
+
+<c:if test="${param.added != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">
+            Pomyślnie <strong>dodano nowego klienta!</strong>
+        </div>
+    </div>
+</c:if>
+<c:if test="${param.edited != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">
+            Pomyślnie <strong>zmieniono dane klienta!</strong>
+        </div>
+    </div>
+</c:if>
 
 <div class="container" align="center">
     <h2>Lista klientów</h2>
@@ -53,8 +71,11 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <a href="/customers/${customer.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                            <a href="/customers/${customer.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                            <sec:authorize access="hasRole('ROLE_MANAGER')">
+                                <a href="/customers/${customer.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
+                                <a href="/customers/${customer.id}/confirm-delete"
+                                   class="btn btn-xs btn-warning">Usuń</a>
+                            </sec:authorize>
                         </td>
                     </tr>
                 </c:forEach>
@@ -62,10 +83,12 @@
             </table>
         </div>
     </c:if>
-    <div align="center">
-        <hr>
-        <a href="/customers/add" class="btn btn-primary">Dodaj nowego klienta</a>
-    </div>
+    <sec:authorize access="hasRole('ROLE_MANAGER')">
+        <div align="center">
+            <hr>
+            <a href="/customers/add" class="btn btn-primary">Dodaj nowego klienta</a>
+        </div>
+    </sec:authorize>
 </div>
 
 <script>

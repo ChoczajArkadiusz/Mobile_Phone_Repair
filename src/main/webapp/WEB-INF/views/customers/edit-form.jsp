@@ -44,14 +44,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="password">Hasło:</label>
-                <div class="col-sm-6">
-                    <form:input path="password" required="true" type="password" id="password" cssClass="form-control"
-                                placeholder="Podaj hasło"/>
-                    <p><strong><form:errors path="password" cssClass="alert alert-danger"/></strong></p>
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="control-label col-sm-4" for="phone">Numer telefonu:</label>
                 <div class="col-sm-6">
                     <form:input path="phone" required="true" id="phone" cssClass="form-control"
