@@ -23,7 +23,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findAllByDeviceId(Long Id);
 
-//    @Query("SELECT t FROM tasks t WHERE t.employee_id = ?1")
-    List<Task> findAllTasksByEmployeeId(Long Id);
+    List<Task> findAllByEmployeeId(Long Id);
+
+    List<Task> findAllByEmployeeEmail(String email);
+
+    List<Task> findAllByEmployeeEmailAndStatusNotIn(String email, TaskStatus... statuses);
 
 }

@@ -43,7 +43,9 @@ public class DeviceService {
         deviceDto.setManufacturer(device.getManufacturer());
         deviceDto.setModel(device.getModel());
         deviceDto.setDescription(device.getDescription());
-        deviceDto.setOwner(device.getOwner().getEmail());
+        if (device.getOwner() != null) {
+            deviceDto.setOwner(device.getOwner().getEmail());
+        }
         return deviceDto;
     }
 

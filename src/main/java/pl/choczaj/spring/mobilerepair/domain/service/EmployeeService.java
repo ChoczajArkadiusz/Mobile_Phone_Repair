@@ -3,15 +3,15 @@ package pl.choczaj.spring.mobilerepair.domain.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.choczaj.spring.mobilerepair.domain.model.Employee;
-import pl.choczaj.spring.mobilerepair.domain.model.Task;
-import pl.choczaj.spring.mobilerepair.domain.model.UserRole;
-import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
+import pl.choczaj.spring.mobilerepair.domain.model.*;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
+import pl.choczaj.spring.mobilerepair.domain.repository.PartRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.UserRoleRepository;
+import pl.choczaj.spring.mobilerepair.web.dto.EmployeeAvailabilityDto;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,7 +31,7 @@ public class EmployeeService {
         this.taskRepository = taskRepository;
     }
 
-    public EmployeeDto getById(Long id) {
+    public EmployeeDto findById(Long id) {
         EmployeeDto employeeDto = new EmployeeDto();
         Employee employee = employeeRepository.findById(id).orElse(null);
 
@@ -72,9 +72,48 @@ public class EmployeeService {
         return true;
     }
 
-    public List<Task> findAllTasksByEmployeeId(Long id){
-        return taskRepository.findAllTasksByEmployeeId(id);
+    public List<Task> findAllTasksByEmployeeId(Long id) {
+        return taskRepository.findAllByEmployeeId(id);
     }
 
+
+    public List<Task> findAllTasksByEmployeeEmail(String email) {
+        return taskRepository.findAllByEmployeeEmailAndStatusNotIn(email, TaskStatus.REPAIRED, TaskStatus.CANCELED, TaskStatus.DELIVERED);
+    }
+
+
+    public List<EmployeeAvailabilityDto> findAvailableEmployees() {
+        List<EmployeeAvailabilityDto> employees = new ArrayList<>();
+        List<Task> activeTasks = taskRepository.findAllByStatusNotIn(TaskStatus.REPAIRED, TaskStatus.CANCELED, TaskStatus.DELIVERED);
+        for (Task activeTask : activeTasks) {
+            if (!containsEmployeeById(employees, activeTask.getEmployee().getId())) {
+                EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
+                newEmplDto.setId(activeTask.getEmployee().getId());
+                newEmplDto.setEmail(activeTask.getEmployee().getEmail());
+                newEmplDto.setWorkHourCost(activeTask.getEmployee().getWorkHourCost());
+                newEmplDto.setHours(8.0);
+                employees.add(newEmplDto);
+            }
+            reduceTime(employees, activeTask.getEmployee().getId(), activeTask.getPart().getWorkHours());
+        }
+        return employees;
+    }
+
+    private boolean containsEmployeeById(List<EmployeeAvailabilityDto> list, Long id) {
+        for (EmployeeAvailabilityDto employee : list) {
+            if (employee.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void reduceTime(List<EmployeeAvailabilityDto> list, Long id, Double reduceTime) {
+        for (EmployeeAvailabilityDto employee : list) {
+            if (employee.getId().equals(id)) {
+                employee.setHours(employee.getHours() - reduceTime);
+            }
+        }
+    }
 
 }

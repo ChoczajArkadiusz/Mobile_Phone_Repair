@@ -37,6 +37,10 @@ public class TaskService {
         return taskDto;
     }
 
+    public void save(Task task){
+        taskRepository.save(task);
+    }
+
     public void save(TaskDto taskDto) {
         Task task = new Task();
 
@@ -55,5 +59,11 @@ public class TaskService {
     public List<Task> findAll(){
         return taskRepository.findAll();
     }
+
+    public Task findById(Long id){
+        return taskRepository.findById(id).orElse(null);
+    }
+
+
 
 }
