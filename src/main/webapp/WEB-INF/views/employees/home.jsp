@@ -16,7 +16,7 @@
 <jsp:include page="../header.jsp"/>
 
 <div class="container" align="center">
-    <h3>Twoje zadania:</h3>
+    <h3>Twoje zadania na dzisiaj:</h3>
     <div>
         <c:if test="${empty tasks}">
             <div>

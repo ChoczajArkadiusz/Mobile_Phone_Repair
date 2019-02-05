@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.choczaj.spring.mobilerepair.domain.model.*;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
-import pl.choczaj.spring.mobilerepair.domain.repository.PartRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
+import pl.choczaj.spring.mobilerepair.domain.repository.UserRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.UserRoleRepository;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeAvailabilityDto;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeDto;
@@ -23,12 +23,14 @@ public class EmployeeService {
     private PasswordEncoder passwordEncoder;
     private UserRoleRepository userRoleRepository;
     private TaskRepository taskRepository;
+    private UserRepository userRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, TaskRepository taskRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, TaskRepository taskRepository, UserRepository userRepository) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
         this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
     }
 
     public EmployeeDto findById(Long id) {
@@ -48,14 +50,20 @@ public class EmployeeService {
         return employeeDto;
     }
 
-    public boolean save(EmployeeDto employeeDto) {
+    public boolean save(EmployeeDto employeeDto, boolean setPassword) {
         Employee employee = new Employee();
         if (employeeDto != null) {
             employee.setFirstName(employeeDto.getFirstName());
             employee.setLastName(employeeDto.getLastName());
             employee.setEmail(employeeDto.getEmail());
-            employee.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
-            employee.setEnabled(true);
+            if (setPassword) {
+                employee.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
+            } else {
+                Employee employeeInDb = employeeRepository.findById(employeeDto.getId()).orElse(null);
+                if (employee != null) {
+                    employee.setPassword(employeeInDb.getPassword());
+                }
+            }
             employee.setEnabled(true);
             employee.setPhone(employeeDto.getPhone());
             employee.setAddress(employeeDto.getAddress());
@@ -83,20 +91,33 @@ public class EmployeeService {
 
 
     public List<EmployeeAvailabilityDto> findAvailableEmployees() {
-        List<EmployeeAvailabilityDto> employees = new ArrayList<>();
+        List<Employee> allEmployees = employeeRepository.findAll();
+//        UserRole roleEmployee = new UserRole();
+//        roleEmployee.setRole(UserRoleEnum.ROLE_EMPLOYEE);
+//        List<Employee> allEmployees = employeeRepository.findAllByRolesIn(roleEmployee);
+//        List<Employee> allEmployees = employeeRepository.findAllHavingRoleIn(UserRoleEnum.ROLE_EMPLOYEE);
+        List<EmployeeAvailabilityDto> availableEmployees = new ArrayList<>();
+        for (Employee employee : allEmployees) {
+                EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
+                newEmplDto.setId(employee.getId());
+                newEmplDto.setEmail(employee.getEmail());
+                newEmplDto.setWorkHourCost(employee.getWorkHourCost());
+                newEmplDto.setHours(8.0);
+                availableEmployees.add(newEmplDto);
+        }
         List<Task> activeTasks = taskRepository.findAllByStatusNotIn(TaskStatus.REPAIRED, TaskStatus.CANCELED, TaskStatus.DELIVERED);
         for (Task activeTask : activeTasks) {
-            if (!containsEmployeeById(employees, activeTask.getEmployee().getId())) {
-                EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
-                newEmplDto.setId(activeTask.getEmployee().getId());
-                newEmplDto.setEmail(activeTask.getEmployee().getEmail());
-                newEmplDto.setWorkHourCost(activeTask.getEmployee().getWorkHourCost());
-                newEmplDto.setHours(8.0);
-                employees.add(newEmplDto);
-            }
-            reduceTime(employees, activeTask.getEmployee().getId(), activeTask.getPart().getWorkHours());
+//            if (!containsEmployeeById(availableEmployees, activeTask.getEmployee().getId())) {
+//                EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
+//                newEmplDto.setId(activeTask.getEmployee().getId());
+//                newEmplDto.setEmail(activeTask.getEmployee().getEmail());
+//                newEmplDto.setWorkHourCost(activeTask.getEmployee().getWorkHourCost());
+//                newEmplDto.setHours(8.0);
+//                availableEmployees.add(newEmplDto);
+//            }
+            reduceTime(availableEmployees, activeTask.getEmployee().getId(), activeTask.getPart().getWorkHours());
         }
-        return employees;
+        return availableEmployees;
     }
 
     private boolean containsEmployeeById(List<EmployeeAvailabilityDto> list, Long id) {

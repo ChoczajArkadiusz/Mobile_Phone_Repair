@@ -28,14 +28,14 @@ public class EmployeeDto {
 
     private String phone;
 
-    @NotBlank
-    @NotNull
-    @Size(min = 3, max = 10)
+//    @NotBlank
+//    @NotNull
+//    @Size(min = 3, max = 10)
     private String password;
 
-    @NotBlank
-    @NotNull
-    @Size(min = 3, max = 10)
+//    @NotBlank
+//    @NotNull
+//    @Size(min = 3, max = 10)
     private String confirmPassword;
 
     private String address;
