@@ -40,7 +40,7 @@ public class DeviceController {
             return "devices/form";
         }
         deviceService.save(deviceDto);
-        return "redirect:/devices/";
+        return "redirect:/devices?modified";
     }
 
     @GetMapping("/{id:[1-9]*[0-9]+}/details")

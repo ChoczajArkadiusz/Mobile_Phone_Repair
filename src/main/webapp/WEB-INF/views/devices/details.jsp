@@ -25,6 +25,7 @@
             <td>Model</td>
             <td>Opis</td>
             <td>Właściciel</td>
+            <td>Opcje</td>
         </tr>
         </thead>
         <tbody>
@@ -34,11 +35,15 @@
             <td>${device.model}</td>
             <td>${device.description}</td>
             <td>${device.owner.email}</td>
+            <td>
+                <sec:authorize access="hasRole('ROLE_MANAGER')">
+                    <a href="/devices/${device.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
+                    <a href="/devices/${device.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                </sec:authorize>
+            </td>
         </tr>
         </tbody>
     </table>
-    <br>
-    <br>
     <br>
     <br>
     <div class="container" align="center">
@@ -73,8 +78,10 @@
                             <td>${task.problemDescription}</td>
                             <td>${task.status.name()}</td>
                             <td>
-                                <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                                <sec:authorize access="hasRole('ROLE_MANAGER')">
+                                    <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
+                                    <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                                </sec:authorize>
                             </td>
                         </tr>
                     </c:forEach>

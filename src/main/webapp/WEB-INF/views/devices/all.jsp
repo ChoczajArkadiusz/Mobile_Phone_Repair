@@ -15,6 +15,13 @@
 <body>
 <jsp:include page="../header.jsp"/>
 
+<c:if test="${param.modified != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">Pomyślnie <strong>zapisano dane w bazie danych!</strong></div>
+    </div>
+</c:if>
+
 <div class="container" align="center">
     <h2>Lista urządzeń klientów</h2>
 
@@ -51,10 +58,6 @@
                         <td>${device.owner.email}</td>
                         <td>
                             <a href="/devices/${device.id}/details" class="btn btn-xs btn-info">Szczegóły</a>
-                            <sec:authorize access="hasRole('ROLE_MANAGER')">
-                                <a href="/devices/${device.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                <a href="/devices/${device.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
-                            </sec:authorize>
                         </td>
                     </tr>
                 </c:forEach>
