@@ -17,17 +17,15 @@
             <ul class="nav navbar-nav">
                 <li><a href="/parts">Części zamienne</a></li>
             </ul>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_MANAGER')">
             <ul class="nav navbar-nav">
                 <li><a href="/tasks">Zadania</a></li>
             </ul>
-        </sec:authorize>
-
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
             <ul class="nav navbar-nav">
                 <li><a href="/employees">Pracownicy</a></li>
             </ul>
         </sec:authorize>
-
         <sec:authorize access="!isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Zaloguj</a></li>

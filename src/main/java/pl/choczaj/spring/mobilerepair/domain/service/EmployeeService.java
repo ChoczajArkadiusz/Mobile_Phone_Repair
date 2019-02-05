@@ -6,13 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.choczaj.spring.mobilerepair.domain.model.*;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
-import pl.choczaj.spring.mobilerepair.domain.repository.UserRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.UserRoleRepository;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeAvailabilityDto;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,14 +23,12 @@ public class EmployeeService {
     private PasswordEncoder passwordEncoder;
     private UserRoleRepository userRoleRepository;
     private TaskRepository taskRepository;
-    private UserRepository userRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, TaskRepository taskRepository, UserRepository userRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, TaskRepository taskRepository) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
         this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
     }
 
     public EmployeeDto findById(Long id) {
@@ -46,35 +44,45 @@ public class EmployeeService {
             employeeDto.setPhone(employee.getPhone());
             employeeDto.setAddress(employee.getAddress());
             employeeDto.setWorkHourCost(employee.getWorkHourCost());
+            employeeDto.setRoles(userRoleRepository.findByUserId(id).stream().map(r -> r.getRole()).collect(Collectors.toList()));
+            employeeDto.setEnabled(employee.isEnabled());
         }
         return employeeDto;
     }
 
-    public boolean save(EmployeeDto employeeDto, boolean setPassword) {
+    public boolean save(EmployeeDto employeeDto, boolean newUser) {
         Employee employee = new Employee();
         if (employeeDto != null) {
+            employee.setId(employeeDto.getId());
             employee.setFirstName(employeeDto.getFirstName());
             employee.setLastName(employeeDto.getLastName());
             employee.setEmail(employeeDto.getEmail());
-            if (setPassword) {
+            if (newUser) {
                 employee.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
+                employee.setEnabled(true);
             } else {
                 Employee employeeInDb = employeeRepository.findById(employeeDto.getId()).orElse(null);
-                if (employee != null) {
-                    employee.setPassword(employeeInDb.getPassword());
-                }
+                employee.setPassword(employeeInDb.getPassword());
+                employee.setEnabled(employeeDto.getEnabled());
             }
-            employee.setEnabled(true);
             employee.setPhone(employeeDto.getPhone());
             employee.setAddress(employeeDto.getAddress());
             employee.setWorkHourCost(employeeDto.getWorkHourCost());
             employeeRepository.save(employee);
 
+            employee.setRoles(userRoleRepository.findByUserId(employee.getId()));
             for (UserRoleEnum roleName : employeeDto.getRoles()) {
-                UserRole userRole = new UserRole();
-                userRole.setUser(employee);
-                userRole.setRole(roleName);
-                userRoleRepository.save(userRole);
+                if (!employee.hasRole(roleName)) {
+                    UserRole userRole = new UserRole();
+                    userRole.setUser(employee);
+                    userRole.setRole(roleName);
+                    userRoleRepository.save(userRole);
+                }
+            }
+            for (UserRole role : employee.getRoles()) {
+                if (!employeeDto.getRoles().contains(role.getRole())) {
+                    userRoleRepository.delete(role);
+                }
             }
         }
         return true;
@@ -98,12 +106,12 @@ public class EmployeeService {
 //        List<Employee> allEmployees = employeeRepository.findAllHavingRoleIn(UserRoleEnum.ROLE_EMPLOYEE);
         List<EmployeeAvailabilityDto> availableEmployees = new ArrayList<>();
         for (Employee employee : allEmployees) {
-                EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
-                newEmplDto.setId(employee.getId());
-                newEmplDto.setEmail(employee.getEmail());
-                newEmplDto.setWorkHourCost(employee.getWorkHourCost());
-                newEmplDto.setHours(8.0);
-                availableEmployees.add(newEmplDto);
+            EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
+            newEmplDto.setId(employee.getId());
+            newEmplDto.setEmail(employee.getEmail());
+            newEmplDto.setWorkHourCost(employee.getWorkHourCost());
+            newEmplDto.setHours(8.0);
+            availableEmployees.add(newEmplDto);
         }
         List<Task> activeTasks = taskRepository.findAllByStatusNotIn(TaskStatus.REPAIRED, TaskStatus.CANCELED, TaskStatus.DELIVERED);
         for (Task activeTask : activeTasks) {

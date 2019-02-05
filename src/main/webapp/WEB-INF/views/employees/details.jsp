@@ -24,7 +24,8 @@
             <td>Naziwsko</td>
             <td>Email</td>
             <td>Grupy</td>
-            <td>Koszt roboczogodziny</td>
+            <td>Koszt roboczogodziny [zł]</td>
+            <td>Status konta</td>
             <td>Opcje</td>
         </tr>
         </thead>
@@ -41,7 +42,11 @@
             </td>
             <td>${employee.workHourCost}</td>
             <td>
-                <a href="/employees/${employee.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
+                <c:if test="${employee.enabled}">Aktywne</c:if>
+                <c:if test="${not employee.enabled}">Nieaktywne</c:if>
+            </td>
+            <td>
+                <a href="/employees/form/${employee.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
                 <a href="/employees/${employee.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
             </td>
         </tr>

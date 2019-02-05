@@ -132,4 +132,5 @@ public class User {
     public void removeRole(UserRole role) {
         this.roles.remove(role);
     }
+
 }

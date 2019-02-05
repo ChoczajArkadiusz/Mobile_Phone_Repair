@@ -37,8 +37,10 @@ public class EmployeeController {
 
     @GetMapping
     public String prepareList(Model model) {
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findAllByEnabled(true);
+        List<Employee> disabledEmployees = employeeRepository.findAllByEnabled(false);
         model.addAttribute("employees", employees);
+        model.addAttribute("disabledEmployees", disabledEmployees);
         return "employees/all";
     }
 

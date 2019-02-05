@@ -1,6 +1,7 @@
 package pl.choczaj.spring.mobilerepair.web.dto;
 
 import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
+import pl.choczaj.spring.mobilerepair.web.validation.ValidGroupEmployeeAdd;
 
 import javax.persistence.Column;
 import javax.validation.constraints.*;
@@ -28,14 +29,14 @@ public class EmployeeDto {
 
     private String phone;
 
-//    @NotBlank
-//    @NotNull
-//    @Size(min = 3, max = 10)
+    @NotBlank(groups = ValidGroupEmployeeAdd.class)
+    @NotNull(groups = ValidGroupEmployeeAdd.class)
+    @Size(min = 3, max = 10, groups = ValidGroupEmployeeAdd.class)
     private String password;
 
-//    @NotBlank
-//    @NotNull
-//    @Size(min = 3, max = 10)
+    @NotBlank(groups = ValidGroupEmployeeAdd.class)
+    @NotNull(groups = ValidGroupEmployeeAdd.class)
+    @Size(min = 3, max = 10, groups = ValidGroupEmployeeAdd.class)
     private String confirmPassword;
 
     private String address;
@@ -47,7 +48,7 @@ public class EmployeeDto {
     @Min(0)
     private Double workHourCost;
 
-
+    private Boolean enabled;
 
 
     public Long getId() {
@@ -133,5 +134,14 @@ public class EmployeeDto {
     public List<UserRoleEnum> getAppRoles() {
         return Arrays.asList(UserRoleEnum.values());
     }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
 
 }
