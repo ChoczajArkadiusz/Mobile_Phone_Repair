@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="quantity">Ilość:</label>
+                <label class="control-label col-sm-4" for="quantity">Ilość [szt.]:</label>
                 <div class="col-sm-6">
                     <form:input path="quantity" required="true" id="quantity" cssClass="form-control"
                                 placeholder="Podaj ilość sztuk" type="number" min="0" step="1"/>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="workHours">Cena:</label>
+                <label class="control-label col-sm-4" for="workHours">Cena [zł]:</label>
                 <div class="col-sm-6">
                     <form:input path="price" required="true" id="price" cssClass="form-control"
                                 placeholder="Podaj cenę jednostkową" type="number" min="0.01" step="0.01"/>
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="workHours">Czas wymiany:</label>
+                <label class="control-label col-sm-4" for="workHours">Czas wymiany [h]:</label>
                 <div class="col-sm-6">
                     <form:input path="workHours" required="true" id="workHours" cssClass="form-control"
                                 placeholder="Podaj ilość roboczogodziny" type="number" min="0.25" step="0.25"/>

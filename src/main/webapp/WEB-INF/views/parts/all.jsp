@@ -15,6 +15,13 @@
 <body>
 <jsp:include page="../header.jsp"/>
 
+<c:if test="${param.modified != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">Pomyślnie <strong>zapisano dane w bazie danych!</strong></div>
+    </div>
+</c:if>
+
 <div class="container" align="center">
     <h2>Lista części zamiennych</h2>
 
@@ -38,9 +45,9 @@
                     <td>Typ</td>
                     <td>Opis</td>
                     <td>Numer seryjny</td>
-                    <td>Ilość</td>
-                    <td>Cena</td>
-                    <td>Czas wymiany</td>
+                    <td>Ilość [szt.]</td>
+                    <td>Cena [zł]</td>
+                    <td>Czas wymiany [h]</td>
                     <td>Opcje</td>
                 </tr>
                 </thead>

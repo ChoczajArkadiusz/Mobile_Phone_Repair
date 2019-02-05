@@ -28,9 +28,9 @@
             <td>Typ</td>
             <td>Opis</td>
             <td>Numer seryjny</td>
-            <td>Ilość</td>
-            <td>Cena</td>
-            <td>Czas wymiany</td>
+            <td>Ilość [szt.]</td>
+            <td>Cena [zł]</td>
+            <td>Czas wymiany [h]</td>
         </tr>
         </thead>
         <tbody id="employeesTab">

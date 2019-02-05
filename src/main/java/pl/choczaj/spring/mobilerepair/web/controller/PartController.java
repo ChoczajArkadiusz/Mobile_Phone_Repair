@@ -39,7 +39,7 @@ public class PartController {
             return "parts/add-edit-form";
         }
         partRepository.save(part);
-        return "redirect:/parts/";
+        return "redirect:/parts?modified";
     }
 
     @GetMapping("/{id:[1-9]*[0-9]+}/edit")
