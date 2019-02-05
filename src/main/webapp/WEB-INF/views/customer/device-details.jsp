@@ -20,7 +20,6 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <td>ID</td>
             <td>Producent</td>
             <td>Model</td>
             <td>Opis</td>
@@ -28,15 +27,12 @@
         </thead>
         <tbody>
         <tr>
-            <td>${device.id}</td>
             <td>${device.manufacturer}</td>
             <td>${device.model}</td>
             <td>${device.description}</td>
         </tr>
         </tbody>
     </table>
-    <br>
-    <br>
     <br>
     <br>
     <div class="container" align="center">
@@ -57,8 +53,9 @@
                         <td>Zarejestrowano</td>
                         <td>Planowane rozp. naprawy</td>
                         <td>Opis problemu</td>
-                        <td>Status</td>
-                        <td>Opcje</td>
+                        <td>Opis naprawy</td>
+                        <td>Data odbioru</td>
+                        <td>Status zlecenia</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -67,10 +64,9 @@
                             <td>${task.registrationDate}</td>
                             <td>${task.scheduledRepairDate}</td>
                             <td>${task.problemDescription}</td>
+                            <td>${task.repairDescription}</td>
+                            <td>${task.deliveryDate}</td>
                             <td>${task.status.name()}</td>
-                            <td>
-
-                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -78,7 +74,6 @@
             </div>
         </c:if>
     </div>
-
 </div>
 </body>
 </html>

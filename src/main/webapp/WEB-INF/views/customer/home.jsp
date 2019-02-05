@@ -15,6 +15,19 @@
 <body>
 <jsp:include page="../header.jsp"/>
 
+<c:if test="${param.edited != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">Pomyślnie <strong>zmieniono dane.</strong></div>
+    </div>
+</c:if>
+<c:if test="${param.failed != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-danger"><strong>Niepowodzenie</strong></div>
+    </div>
+</c:if>
+
 <div class="container" align="center">
     <h3>Twoje dane:</h3>
     <div>
@@ -35,7 +48,7 @@
                 <td>${customer.email}</td>
                 <td>${customer.phone}</td>
                 <td>
-                    <a href="/" class="btn btn-xs btn-primary">Edytuj</a>
+                    <a href="/customer/edit" class="btn btn-xs btn-primary">Edytuj</a>
                 </td>
             </tr>
             </tbody>
@@ -74,7 +87,7 @@
                         <td>${device.model}</td>
                         <td>${device.description}</td>
                         <td>
-                            <a href="/devices/${device.id}/details" class="btn btn-xs btn-info">Szczegóły</a>
+                            <a href="/customer/device-details/${device.id}" class="btn btn-xs btn-info">Szczegóły</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -82,7 +95,6 @@
             </table>
         </div>
     </c:if>
-
 </div>
 </body>
 </html>

@@ -2,8 +2,8 @@ package pl.choczaj.spring.mobilerepair.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import pl.choczaj.spring.mobilerepair.domain.model.Customer;
 import pl.choczaj.spring.mobilerepair.domain.model.TaskStatus;
 import pl.choczaj.spring.mobilerepair.domain.model.User;
@@ -14,7 +14,9 @@ import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
 import pl.choczaj.spring.mobilerepair.domain.service.EmployeeService;
 import pl.choczaj.spring.mobilerepair.domain.service.UserService;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -62,9 +64,6 @@ public class HomeController {
         }
 
     }
-
-
-
 
 
 }

@@ -30,14 +30,23 @@ public class EmployeeFormController {
         if (result.hasErrors()) {
             return "employees/all";
         }
-        employeeService.save(employeeDto);
+        employeeService.save(employeeDto, true);
+        return "redirect:/";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute("employeeDto") @Valid EmployeeDto employeeDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "employees/edit-form-dto";
+        }
+        employeeService.save(employeeDto, false);
         return "redirect:/";
     }
 
     @GetMapping("/{id:[1-9]*[0-9]+}/edit")
     public String prepareEditForm(@PathVariable Long id, Model model) {
         model.addAttribute("employeeDto", employeeService.findById(id));
-        return "employees/form-dto";
+        return "employees/edit-form-dto";
     }
 
 
