@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="phone">Numer telefonu:</label>
                 <div class="col-sm-6">
-                    <form:input path="phone" required="true" id="phone" cssClass="form-control"
+                    <form:input path="phone" required="false" id="phone" cssClass="form-control"
                                 placeholder="Podaj numer telefonu"/>
                     <p><strong><form:errors path="phone" cssClass="alert alert-danger"/></strong></p>
                 </div>
@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="address">Adres:</label>
                 <div class="col-sm-6">
-                    <form:input path="address" required="true" id="address" cssClass="form-control"
+                    <form:input path="address" required="false" id="address" cssClass="form-control"
                                 placeholder="Podaj adres"/>
                     <p><strong><form:errors path="address" cssClass="alert alert-danger"/></strong></p>
                 </div>

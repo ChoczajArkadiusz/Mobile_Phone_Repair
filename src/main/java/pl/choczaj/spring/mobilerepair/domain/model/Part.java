@@ -1,6 +1,7 @@
 package pl.choczaj.spring.mobilerepair.domain.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity(name = "parts")
 public class Part {
@@ -9,10 +10,19 @@ public class Part {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @NotNull
+    @Size(max = 50)
     private String manufacturer;
 
+    @NotBlank
+    @NotNull
+    @Size(max = 50)
     private String model;
 
+    @NotBlank
+    @NotNull
+    @Size(max = 50)
     private String type;
 
     private String description;
@@ -20,13 +30,18 @@ public class Part {
     @Column(name = "serial_number")
     private String serialNumber;
 
+    @NotNull
+    @Min(0)
     private Long quantity;
 
+    @NotNull
+    @DecimalMin("0.01")
     private Double price;
 
+    @NotNull
+    @DecimalMin("0.25")
     @Column(name = "work_hours")
     private Double workHours;
-
 
     public Long getId() {
         return id;
@@ -99,4 +114,6 @@ public class Part {
     public void setType(String type) {
         this.type = type;
     }
+
+
 }

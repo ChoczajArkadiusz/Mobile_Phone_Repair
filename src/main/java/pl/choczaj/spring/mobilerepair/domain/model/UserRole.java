@@ -2,6 +2,7 @@ package pl.choczaj.spring.mobilerepair.domain.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users_roles")
@@ -11,6 +12,7 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 

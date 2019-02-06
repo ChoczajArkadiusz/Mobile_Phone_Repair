@@ -1,6 +1,10 @@
 package pl.choczaj.spring.mobilerepair.domain.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,21 +33,27 @@ public class Task {
     @ManyToOne
     private Employee employee;
 
+    @NotBlank
+    @NotNull
+    @Size(min = 10, max = 500)
     @Column(name = "problem_description")
     private String problemDescription;
 
     @Column(name = "repair_description")
     private String repairDescription;
 
+    @NotNull
     @ManyToOne
     private Device device;
 
+    @NotNull
     @OneToOne
     private Part part;
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
+    @DecimalMin("0.01")
     @Column(name = "cost_for_customer")
     private Double costForCustomer;
 
@@ -155,4 +165,6 @@ public class Task {
     public void setCostForCustomer(Double costForCustomer) {
         this.costForCustomer = costForCustomer;
     }
+
+
 }

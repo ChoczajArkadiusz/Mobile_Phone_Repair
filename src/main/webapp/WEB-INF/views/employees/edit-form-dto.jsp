@@ -80,6 +80,7 @@
                 <div class="col-sm-1">
                     <form:checkbox path="enabled" id="enabled" cssClass="form-control" label="Aktywne"
                                    title="konto aktywne kiedy checkbox zaznaczony"/>
+                                   <%--cssStyle="height: 18px; width: 18px; -moz-appearance: none"--%>
                     <p><strong><form:errors path="enabled" cssClass="alert alert-danger"/></strong></p>
                 </div>
             </div>

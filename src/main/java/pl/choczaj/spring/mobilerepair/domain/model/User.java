@@ -1,11 +1,14 @@
 package pl.choczaj.spring.mobilerepair.domain.model;
 
+import pl.choczaj.spring.mobilerepair.web.validation.Phone;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -16,9 +19,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @NotNull
+    @Size(min = 3, max = 50)
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank
+    @NotNull
+    @Size(min = 3, max = 50)
     @Column(name = "last_name")
     private String lastName;
 
@@ -27,6 +36,7 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
+    @Phone
     @Column(name = "phone")
     private String phone;
 
@@ -50,8 +60,6 @@ public class User {
         }
         return false;
     }
-
-
 
     public Long getId() {
         return id;

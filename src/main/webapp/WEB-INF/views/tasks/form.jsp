@@ -81,7 +81,6 @@
                         <td>Ilość</td>
                         <td>Cena</td>
                         <td>Czas wymiany</td>
-                        <td>Opcje</td>
                     </tr>
                     </thead>
                     <tbody id="partsTab">
@@ -97,9 +96,6 @@
                             <td>${part.quantity}</td>
                             <td>${part.price}</td>
                             <td>${part.workHours}</td>
-                            <td>
-                                <a href="/parts/${part.id}/edit" class="btn btn-xs btn-primary">Dodaj</a>
-                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -130,7 +126,6 @@
                     <td>Email</td>
                     <td>Koszt roboczogodziny [zł]</td>
                     <td>Dostępność [h]</td>
-                    <td>Opcje</td>
                 </tr>
                 </thead>
                 <tbody id="employeesTab">
@@ -141,9 +136,6 @@
                         <td>${employee.email}</td>
                         <td>${employee.workHourCost}</td>
                         <td>${employee.hours}</td>
-                        <td>
-                            <a href="/" class="btn btn-xs btn-info">Przypisz</a>
-                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

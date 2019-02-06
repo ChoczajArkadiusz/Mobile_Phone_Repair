@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="description">Opis:</label>
                 <div class="col-sm-6">
-                    <form:input path="description" required="true" id="description" cssClass="form-control"
+                    <form:input path="description" required="false" id="description" cssClass="form-control"
                                 placeholder="Podaj opis"/>
                     <p><strong><form:errors path="description" cssClass="alert alert-danger"/></strong></p>
                 </div>

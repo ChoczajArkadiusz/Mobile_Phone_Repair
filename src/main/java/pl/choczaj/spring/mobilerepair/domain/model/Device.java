@@ -1,6 +1,9 @@
 package pl.choczaj.spring.mobilerepair.domain.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +14,19 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @NotNull
+    @Size(max = 50)
     private String manufacturer;
 
+    @NotBlank
+    @NotNull
+    @Size(max = 50)
     private String model;
 
     private String description;
 
+    @NotNull
     @ManyToOne
     private Customer owner;
 
@@ -74,5 +84,6 @@ public class Device {
     public void addTask(Task task) {
         this.tasks.add(task);
     }
+
 
 }

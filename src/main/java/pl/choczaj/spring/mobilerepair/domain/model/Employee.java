@@ -23,4 +23,6 @@ public class Employee extends User {
     public void setWorkHourCost(Double workHourCost) {
         this.workHourCost = workHourCost;
     }
+
+
 }

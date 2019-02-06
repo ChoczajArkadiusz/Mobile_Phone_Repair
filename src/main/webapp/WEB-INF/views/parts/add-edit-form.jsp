@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="description">Opis:</label>
                 <div class="col-sm-6">
-                    <form:input path="description" required="true" id="description" cssClass="form-control"
+                    <form:input path="description" required="false" id="description" cssClass="form-control"
                                 placeholder="Podaj opis"/>
                     <p><strong><form:errors path="description" cssClass="alert alert-danger"/></strong></p>
                 </div>
@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="serialNumber">Numer seryjny:</label>
                 <div class="col-sm-6">
-                    <form:input path="serialNumber" required="true" id="serialNumber" cssClass="form-control"
+                    <form:input path="serialNumber" required="false" id="serialNumber" cssClass="form-control"
                                 placeholder="Podaj numer seryjny"/>
                     <p><strong><form:errors path="serialNumber" cssClass="alert alert-danger"/></strong></p>
                 </div>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="workHours">Cena [zł]:</label>
+                <label class="control-label col-sm-4" for="price">Cena [zł]:</label>
                 <div class="col-sm-6">
                     <form:input path="price" required="true" id="price" cssClass="form-control"
                                 placeholder="Podaj cenę jednostkową" type="number" min="0.01" step="0.01"/>
