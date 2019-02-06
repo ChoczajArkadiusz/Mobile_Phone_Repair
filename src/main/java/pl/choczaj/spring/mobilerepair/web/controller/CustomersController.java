@@ -82,10 +82,14 @@ public class CustomersController {
         if (result.hasErrors()) {
             return "customers/edit-form";
         }
-        customer.setPassword(customer.getPassword());
-        customer.setEnabled(true);
-        customerRepository.save(customer);
-        return "redirect:/customers/?edited";
+        Customer customerInDb = customerRepository.findById(customer.getId()).orElse(null);
+        if (customerInDb != null) {
+            customer.setPassword(customerInDb.getPassword());
+            customer.setEnabled(true);
+            customerRepository.save(customer);
+            return "redirect:/customers/?edited";
+        }
+        return "customers/edit-form";
     }
 
     @GetMapping("/{id:[1-9]*[0-9]+}/edit")
