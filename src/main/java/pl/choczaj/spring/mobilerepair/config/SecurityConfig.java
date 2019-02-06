@@ -39,8 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().anyRequest().permitAll();
-
         http
                 .formLogin()
                     .loginPage("/login")
@@ -48,29 +46,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .passwordParameter("password")
                     .defaultSuccessUrl("/")
                 .and()
-                .authorizeRequests()
-
-                .anyRequest().permitAll()
-
-
-//                .antMatchers("/employees-form/register").anonymous()
-//                .antMatchers("/login").anonymous()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/employees/**").hasRole("EMPLOYEE")
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .anyRequest().authenticated()
+                    .authorizeRequests()
+                    .antMatchers("/login").anonymous()
+                    .antMatchers("/customer/**").hasRole("CUSTOMER")
+                    .antMatchers("/customers").hasRole("EMPLOYEE")
+                    .antMatchers("/customers/**").hasRole("MANAGER")
+                    .antMatchers("/devices").hasRole("EMPLOYEE")
+                    .antMatchers("/devices/**/details").hasRole("EMPLOYEE")
+                    .antMatchers("/devices/**").hasRole("MANAGER")
+                    .antMatchers("/parts").hasRole("EMPLOYEE")
+                    .antMatchers("/parts/**").hasRole("MANAGER")
+                    .antMatchers("/tasks/**").hasRole("MANAGER")
+                    .antMatchers("/employees/**").hasRole("MANAGER")
+                    .antMatchers("/admin/**").hasAnyRole("OWNER", "ADMIN")
+                    .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .logout().logoutUrl("/logout")
                 .logoutSuccessUrl("/");
-
-
-//        http
-//                .authorizeRequests()
-//                    .anyRequest().authenticated()
-//                .and()
-//                .formLogin().and()
-//                .httpBasic();
     }
 
 
