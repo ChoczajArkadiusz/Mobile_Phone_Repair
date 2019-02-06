@@ -2,7 +2,6 @@ package pl.choczaj.spring.mobilerepair.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.choczaj.spring.mobilerepair.domain.model.Customer;
 import pl.choczaj.spring.mobilerepair.domain.model.TaskStatus;
@@ -14,9 +13,7 @@ import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
 import pl.choczaj.spring.mobilerepair.domain.service.EmployeeService;
 import pl.choczaj.spring.mobilerepair.domain.service.UserService;
 
-import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -28,7 +25,8 @@ public class HomeController {
     private DeviceRepository deviceRepository;
     private TaskRepository taskRepository;
 
-    public HomeController(UserService userService, EmployeeService employeeService, CustomerRepository customerRepository, DeviceRepository deviceRepository, TaskRepository taskRepository) {
+    public HomeController(UserService userService, EmployeeService employeeService, CustomerRepository customerRepository,
+                          DeviceRepository deviceRepository, TaskRepository taskRepository) {
         this.userService = userService;
         this.employeeService = employeeService;
         this.customerRepository = customerRepository;
@@ -62,7 +60,6 @@ public class HomeController {
             model.addAttribute("loggedUser", "");
             return "redirect:/login";
         }
-
     }
 
 

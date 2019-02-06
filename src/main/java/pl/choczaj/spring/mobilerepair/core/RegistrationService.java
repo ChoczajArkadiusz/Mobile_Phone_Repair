@@ -8,12 +8,11 @@ import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
 @Transactional
 public class RegistrationService {
 
-        private EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
-        public RegistrationService(EmployeeRepository employeeRepository) {
-                this.employeeRepository = employeeRepository;
-        }
-
+    public RegistrationService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
 
 }

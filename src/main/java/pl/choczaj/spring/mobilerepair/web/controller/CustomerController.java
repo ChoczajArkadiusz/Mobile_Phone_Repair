@@ -49,7 +49,6 @@ public class CustomerController {
         return "redirect:/?failed";
     }
 
-
     @GetMapping("/device-details/{id:[1-9]*[0-9]+}")
     public String prepareDetailedView(@PathVariable Long id, Model model, Principal principal) {
         Customer customer = customerRepository.findByEmail(principal.getName()).orElse(null);

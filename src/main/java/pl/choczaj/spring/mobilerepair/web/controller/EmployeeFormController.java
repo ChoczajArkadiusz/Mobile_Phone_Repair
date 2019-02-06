@@ -9,7 +9,6 @@ import pl.choczaj.spring.mobilerepair.domain.service.EmployeeService;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeDto;
 import pl.choczaj.spring.mobilerepair.web.validation.ValidGroupEmployeeAdd;
 
-import javax.validation.Valid;
 import javax.validation.groups.Default;
 
 @Controller
@@ -34,7 +33,7 @@ public class EmployeeFormController {
             return "employees/form-dto";
         }
         if (!employeeDto.getPassword().equals(employeeDto.getConfirmPassword())) {
-            result.rejectValue("confirmPassword",null, "Hasła muszą być zgodne");
+            result.rejectValue("confirmPassword", null, "Hasła muszą być zgodne");
             return "employees/form-dto";
         }
         employeeService.save(employeeDto, true);
@@ -55,8 +54,6 @@ public class EmployeeFormController {
         model.addAttribute("employeeDto", employeeService.findById(id));
         return "employees/edit-form-dto";
     }
-
-
 
 
 }

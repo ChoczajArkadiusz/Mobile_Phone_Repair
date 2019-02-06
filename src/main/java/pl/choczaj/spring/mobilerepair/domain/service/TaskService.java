@@ -15,14 +15,12 @@ public class TaskService {
 
     private TaskRepository taskRepository;
     private DeviceRepository deviceRepository;
-    private CustomerRepository customerRepository;
     private EmployeeRepository employeeRepository;
     private PartRepository partRepository;
 
-    public TaskService(TaskRepository taskRepository, DeviceRepository deviceRepository, CustomerRepository customerRepository, EmployeeRepository employeeRepository, PartRepository partRepository) {
+    public TaskService(TaskRepository taskRepository, DeviceRepository deviceRepository, EmployeeRepository employeeRepository, PartRepository partRepository) {
         this.taskRepository = taskRepository;
         this.deviceRepository = deviceRepository;
-        this.customerRepository = customerRepository;
         this.employeeRepository = employeeRepository;
         this.partRepository = partRepository;
     }
@@ -37,13 +35,12 @@ public class TaskService {
         return taskDto;
     }
 
-    public void save(Task task){
+    public void save(Task task) {
         taskRepository.save(task);
     }
 
     public void save(TaskDto taskDto) {
         Task task = new Task();
-
         taskDto.setDevice(deviceRepository.findById(taskDto.getDevice().getId()).orElse(null));
         taskDto.setPart(partRepository.findById(taskDto.getPart().getId()).orElse(null));
 
@@ -56,14 +53,13 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public List<Task> findAll(){
+    public List<Task> findAll() {
         return taskRepository.findAll();
     }
 
-    public Task findById(Long id){
+    public Task findById(Long id) {
         return taskRepository.findById(id).orElse(null);
     }
-
 
 
 }

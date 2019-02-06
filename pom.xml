@@ -14,6 +14,8 @@
 	<name>mobilerepair</name>
 	<description>Demo project for Spring Boot</description>
 
+	<packaging>war</packaging>
+
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -74,12 +76,32 @@
 	</dependencies>
 
 	<build>
+		<finalName>mobile-repair-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>2.0.6</version>
+				<configuration>
+					<appName>mobile-repair-app</appName>
+					<includeTarget>false</includeTarget>
+					<includes>
+						<include>target/${project.build.finalName}.war</include>
+					</includes>
+					<jdkVersion>${java.version}</jdkVersion>
+					<processTypes>
+						<web>java $JAVA_OPTS -jar target/${project.build.finalName}.war</web>
+					</processTypes>
+				</configuration>
+			</plugin>
+
 		</plugins>
+
 	</build>
 
 </project>

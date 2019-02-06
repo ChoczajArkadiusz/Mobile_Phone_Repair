@@ -29,7 +29,6 @@ public class TaskController {
         this.emailSender = emailSender;
     }
 
-
     @GetMapping
     public String prepareList(Model model) {
         List<Task> tasks = taskService.findAll();
@@ -44,20 +43,12 @@ public class TaskController {
             task.setStatus(status);
         }
         if (status.equals(TaskStatus.REPAIRED)) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Dzień dobry <b>").append(task.getDevice().getOwner().getFirstName()).append(" ")
-                    .append(task.getDevice().getOwner().getLastName()).append("</b>,<br><br>");
-            sb.append("Twoje urządzenie: <b>").append(task.getDevice().getManufacturer()).append(" ")
-                    .append(task.getDevice().getModel()).append(" jest gotowe do odbioru</b><br>");
-            sb.append("Pozdrawiamy :)");
             emailSender.sendEmail("programmingTestReceive@gmail.com",
-                    "Mobile Repair - Urządzenie gotowe do odbioru", sb.toString());
-
+                    "Mobile Repair - Urządzenie gotowe do odbioru", prepareReadyForPickUpEmail(task));
         }
         taskService.save(task);
         return "redirect:/";
     }
-
 
     @PostMapping("/add")
     public String prepareForm(Model model, @Valid Device device) {
@@ -73,6 +64,16 @@ public class TaskController {
         }
         taskService.save(taskDto);
         return "redirect:/devices/" + taskDto.getDevice().getId() + "/details";
+    }
+
+    private String prepareReadyForPickUpEmail(Task task) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Dzień dobry <b>").append(task.getDevice().getOwner().getFirstName()).append(" ")
+                .append(task.getDevice().getOwner().getLastName()).append("</b>,<br><br>")
+                .append("Twoje urządzenie: <b>").append(task.getDevice().getManufacturer()).append(" ")
+                .append(task.getDevice().getModel()).append(" jest gotowe do odbioru</b><br>")
+                .append("Pozdrawiamy :)");
+        return sb.toString();
     }
 
 

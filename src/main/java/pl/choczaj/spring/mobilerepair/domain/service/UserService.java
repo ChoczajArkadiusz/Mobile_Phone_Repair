@@ -35,11 +35,11 @@ public class UserService {
         UserRole userRole = new UserRole();
         userRole.setUser(employee);
         return true;
-
-
     }
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
+
+
 }

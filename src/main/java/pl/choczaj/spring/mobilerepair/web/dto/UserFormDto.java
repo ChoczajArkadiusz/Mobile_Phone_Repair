@@ -46,9 +46,6 @@ public class UserFormDto {
 
     private List<String> appRoles = new ArrayList<>();
 
-
-
-
     public Long getId() {
         return id;
     }
@@ -124,5 +121,6 @@ public class UserFormDto {
     public List<UserRoleEnum> getAppRoles() {
         return Arrays.asList(UserRoleEnum.values());
     }
+
 
 }

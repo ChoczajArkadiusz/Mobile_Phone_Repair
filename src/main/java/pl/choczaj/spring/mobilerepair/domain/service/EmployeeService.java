@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 @Transactional
 public class EmployeeService {
@@ -92,18 +91,12 @@ public class EmployeeService {
         return taskRepository.findAllByEmployeeId(id);
     }
 
-
     public List<Task> findAllTasksByEmployeeEmail(String email) {
         return taskRepository.findAllByEmployeeEmailAndStatusNotIn(email, TaskStatus.REPAIRED, TaskStatus.CANCELED, TaskStatus.DELIVERED);
     }
 
-
     public List<EmployeeAvailabilityDto> findAvailableEmployees() {
         List<Employee> allEmployees = employeeRepository.findAll();
-//        UserRole roleEmployee = new UserRole();
-//        roleEmployee.setRole(UserRoleEnum.ROLE_EMPLOYEE);
-//        List<Employee> allEmployees = employeeRepository.findAllByRolesIn(roleEmployee);
-//        List<Employee> allEmployees = employeeRepository.findAllHavingRoleIn(UserRoleEnum.ROLE_EMPLOYEE);
         List<EmployeeAvailabilityDto> availableEmployees = new ArrayList<>();
         for (Employee employee : allEmployees) {
             EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
@@ -115,26 +108,9 @@ public class EmployeeService {
         }
         List<Task> activeTasks = taskRepository.findAllByStatusNotIn(TaskStatus.REPAIRED, TaskStatus.CANCELED, TaskStatus.DELIVERED);
         for (Task activeTask : activeTasks) {
-//            if (!containsEmployeeById(availableEmployees, activeTask.getEmployee().getId())) {
-//                EmployeeAvailabilityDto newEmplDto = new EmployeeAvailabilityDto();
-//                newEmplDto.setId(activeTask.getEmployee().getId());
-//                newEmplDto.setEmail(activeTask.getEmployee().getEmail());
-//                newEmplDto.setWorkHourCost(activeTask.getEmployee().getWorkHourCost());
-//                newEmplDto.setHours(8.0);
-//                availableEmployees.add(newEmplDto);
-//            }
             reduceTime(availableEmployees, activeTask.getEmployee().getId(), activeTask.getPart().getWorkHours());
         }
         return availableEmployees;
-    }
-
-    private boolean containsEmployeeById(List<EmployeeAvailabilityDto> list, Long id) {
-        for (EmployeeAvailabilityDto employee : list) {
-            if (employee.getId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void reduceTime(List<EmployeeAvailabilityDto> list, Long id, Double reduceTime) {
@@ -144,5 +120,6 @@ public class EmployeeService {
             }
         }
     }
+
 
 }

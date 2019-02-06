@@ -76,8 +76,9 @@ public class DeviceService {
         }
     }
 
-    public List<Task> findAllTasksByDeviceId(Long id){
+    public List<Task> findAllTasksByDeviceId(Long id) {
         return taskRepository.findAllByDeviceId(id);
     }
+
 
 }

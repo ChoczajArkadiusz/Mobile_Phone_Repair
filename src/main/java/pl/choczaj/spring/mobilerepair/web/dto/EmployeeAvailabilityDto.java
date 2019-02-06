@@ -38,4 +38,6 @@ public class EmployeeAvailabilityDto {
     public void setHours(Double hours) {
         this.hours = hours;
     }
+
+
 }

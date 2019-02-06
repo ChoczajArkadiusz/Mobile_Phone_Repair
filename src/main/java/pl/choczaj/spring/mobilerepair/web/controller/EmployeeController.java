@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.choczaj.spring.mobilerepair.domain.model.Employee;
 import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
-import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
 import pl.choczaj.spring.mobilerepair.domain.service.EmployeeService;
-import pl.choczaj.spring.mobilerepair.email.EmailSender;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -20,13 +18,10 @@ import java.util.List;
 public class EmployeeController {
 
     private EmployeeRepository employeeRepository;
-    private TaskRepository taskRepository;
-
     private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, TaskRepository taskRepository, EmployeeService employeeService) {
+    public EmployeeController(EmployeeRepository employeeRepository, EmployeeService employeeService) {
         this.employeeRepository = employeeRepository;
-        this.taskRepository = taskRepository;
         this.employeeService = employeeService;
     }
 
@@ -65,7 +60,6 @@ public class EmployeeController {
         model.addAttribute("tasks", employeeService.findAllTasksByEmployeeId(id));
         return "employees/details";
     }
-
 
     @GetMapping("/{id:[1-9]*[0-9]+}/confirm-delete")
     public String confirmDelete(@PathVariable Long id, Model model) {

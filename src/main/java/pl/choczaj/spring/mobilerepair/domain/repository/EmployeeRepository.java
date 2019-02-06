@@ -1,12 +1,8 @@
 package pl.choczaj.spring.mobilerepair.domain.repository;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.choczaj.spring.mobilerepair.domain.model.Employee;
-import pl.choczaj.spring.mobilerepair.domain.model.TaskStatus;
-import pl.choczaj.spring.mobilerepair.domain.model.UserRole;
-import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
 
 import java.util.List;
 import java.util.Optional;

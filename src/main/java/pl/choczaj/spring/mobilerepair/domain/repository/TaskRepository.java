@@ -1,7 +1,6 @@
 package pl.choczaj.spring.mobilerepair.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import pl.choczaj.spring.mobilerepair.domain.model.Task;
 import pl.choczaj.spring.mobilerepair.domain.model.TaskStatus;
@@ -14,9 +13,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Optional<Task> findById(Long id);
 
-//    @Query("SELECT t FROM tasks t WHERE t.status <> 'REPAIRED' AND t.status <> 'DELIVERED' AND t.status <> 'CANCELED'")
-//    List<Task> findAllInProgres();
-
     List<Task> findAllByStatusIn(TaskStatus... statuses);
 
     List<Task> findAllByStatusNotIn(TaskStatus... statuses);
@@ -28,5 +24,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findAllByEmployeeEmail(String email);
 
     List<Task> findAllByEmployeeEmailAndStatusNotIn(String email, TaskStatus... statuses);
+
 
 }

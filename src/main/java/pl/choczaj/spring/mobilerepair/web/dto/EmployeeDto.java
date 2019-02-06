@@ -1,9 +1,9 @@
 package pl.choczaj.spring.mobilerepair.web.dto;
 
 import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
+import pl.choczaj.spring.mobilerepair.web.validation.Phone;
 import pl.choczaj.spring.mobilerepair.web.validation.ValidGroupEmployeeAdd;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +27,7 @@ public class EmployeeDto {
     @Size(min = 3)
     private String email;
 
+    @Phone
     private String phone;
 
     @NotBlank(groups = ValidGroupEmployeeAdd.class)
@@ -49,7 +50,6 @@ public class EmployeeDto {
     private Double workHourCost;
 
     private Boolean enabled;
-
 
     public Long getId() {
         return id;

@@ -27,7 +27,8 @@ public class CustomersController {
     private UserRoleRepository userRoleRepository;
     private final EmailSender emailSender;
 
-    public CustomersController(CustomerRepository customerRepository, DeviceRepository deviceRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, EmailSender emailSender) {
+    public CustomersController(CustomerRepository customerRepository, DeviceRepository deviceRepository,
+                               PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, EmailSender emailSender) {
         this.customerRepository = customerRepository;
         this.deviceRepository = deviceRepository;
         this.passwordEncoder = passwordEncoder;
@@ -66,14 +67,8 @@ public class CustomersController {
         userRole.setRole(UserRoleEnum.ROLE_CUSTOMER);
         customerRepository.save(customer);
         userRoleRepository.save(userRole);
-        StringBuilder sb = new StringBuilder();
-        sb.append("Witaj <b>").append(customer.getFirstName()).append(" ").append(customer.getLastName()).append("</b>,<br><br>");
-        sb.append("Utworzyliśmy dla Ciebie konto w serwisie: ").append("MOBILE_REPAIR").append("<br>");
-        sb.append("Status swoich zleceń możesz sprawdzić tutaj: ").append("<a href='http://localhost:5000/'>Link</a>").append("<br>");
-        sb.append("Twoje hasło: ").append(pass).append("<br><br>");
-        sb.append("Pozdrawiamy :)");
         emailSender.sendEmail("programmingTestReceive@gmail.com",
-                "Mobile Repair - Utworzono użytkownika " + customer.getEmail(), sb.toString());
+                "Mobile Repair - Utworzono użytkownika " + customer.getEmail(), prepareWelcomeEmail(customer, pass));
         return "redirect:/customers/?added";
     }
 
@@ -118,5 +113,16 @@ public class CustomersController {
         return "redirect:/customers";
     }
 
+    private String prepareWelcomeEmail(@ModelAttribute("customer") @Valid Customer customer, String pass) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Witaj <b>").append(customer.getFirstName()).append(" ")
+                .append(customer.getLastName()).append("</b>,<br><br>")
+                .append("Utworzyliśmy dla Ciebie konto w serwisie: ").append("MOBILE_REPAIR").append("<br>")
+                .append("Status swoich zleceń możesz sprawdzić tutaj: ")
+                .append("<a href='http://localhost:5000/'>Link</a>").append("<br>")
+                .append("Twoje hasło: ").append(pass).append("<br><br>")
+                .append("Pozdrawiamy :)");
+        return sb.toString();
+    }
 
 }

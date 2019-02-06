@@ -1,11 +1,7 @@
 package pl.choczaj.spring.mobilerepair.web.dto;
 
-
-import pl.choczaj.spring.mobilerepair.domain.model.Customer;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class DeviceDto {
 
@@ -64,4 +60,6 @@ public class DeviceDto {
     public void setCustomersEmails(List<String> customersEmails) {
         this.customersEmails = customersEmails;
     }
+
+
 }
