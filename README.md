@@ -1,13 +1,14 @@
 # Mobile_Phone_Repair
 
+**application available online:** https://mobile-repair-app.herokuapp.com
 
 ## 1. Description
 
-**This application is a tool designed for small business dealing with mobile phones repairs.**
+**This web application is a tool designed for small business dealing with mobile phones repairs.**
 
 The application allows the client (business owner) to:
 - manage users (customers, employees),
-- mange users roles defining access level to GIU,
+- manage user roles defining access level to GUI,
 - manage devices and combine them with customers,
 - manage parts warehouse,
 - manage tasks and working time of employees,
