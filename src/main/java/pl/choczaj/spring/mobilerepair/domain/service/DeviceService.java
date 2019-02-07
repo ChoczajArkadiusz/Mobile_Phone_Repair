@@ -80,5 +80,59 @@ public class DeviceService {
         return taskRepository.findAllByDeviceId(id);
     }
 
+    public void deleteAll() {
+        deviceRepository.deleteAll();
+    }
+
+    public void initWithDemoDevices() {
+        Device[] demoDevices = new Device[8];
+        for (int i = 0; i < demoDevices.length; i++) {
+            demoDevices[i] = new Device();
+        }
+        demoDevices[0].setManufacturer("Samsung");
+        demoDevices[0].setModel("S6");
+        demoDevices[0].setDescription("czarny");
+        demoDevices[0].setOwner(customerRepository.findByEmail("michal.p@wp.pl").orElse(null));
+
+        demoDevices[1].setManufacturer("Xiaomi");
+        demoDevices[1].setModel("Mi6");
+        demoDevices[1].setDescription("czarny");
+        demoDevices[1].setOwner(customerRepository.findByEmail("janusz.k@wp.pl").orElse(null));
+
+        demoDevices[2].setManufacturer("Xiaomi");
+        demoDevices[2].setModel("Redmi Note 5");
+        demoDevices[2].setDescription("czarny");
+        demoDevices[2].setOwner(customerRepository.findByEmail("kasia.n@wp.pl").orElse(null));
+
+        demoDevices[3].setManufacturer("Samsung");
+        demoDevices[3].setModel("S6");
+        demoDevices[3].setDescription("niebieski");
+        demoDevices[3].setOwner(customerRepository.findByEmail("kaja.k@wp.pl").orElse(null));
+
+        demoDevices[4].setManufacturer("Xiaomi");
+        demoDevices[4].setModel("Redmi Note 5");
+        demoDevices[4].setDescription("niebieski");
+        demoDevices[4].setOwner(customerRepository.findByEmail("dariusz.m@wp.pl").orElse(null));
+
+        demoDevices[5].setManufacturer("Xiaomi");
+        demoDevices[5].setModel("Mi6");
+        demoDevices[5].setDescription("czarny, czarne etui");
+        demoDevices[5].setOwner(customerRepository.findByEmail("dariusz.m@wp.pl").orElse(null));
+
+        demoDevices[6].setManufacturer("Samsung");
+        demoDevices[6].setModel("S7");
+        demoDevices[6].setDescription("czarny");
+        demoDevices[6].setOwner(customerRepository.findByEmail("michal.p@wp.pl").orElse(null));
+
+        demoDevices[7].setManufacturer("Samsung");
+        demoDevices[7].setModel("S7");
+        demoDevices[7].setDescription("biały, czarne etui");
+        demoDevices[7].setOwner(customerRepository.findByEmail("agnieszka.m@wp.pl").orElse(null));
+
+        for (Device device : demoDevices) {
+            deviceRepository.save(device);
+        }
+    }
+
 
 }

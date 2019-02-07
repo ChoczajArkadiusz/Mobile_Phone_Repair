@@ -13,6 +13,8 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     Optional<Part> findById(Long id);
 
+    Optional<Part> findBySerialNumber(String serialNumber);
+
     @Query("SELECT p FROM parts p WHERE p.manufacturer = ?1 AND p.model = ?2 AND p.quantity > 0")
     List<Part> findPartsByManufacturerAndModel(String manufacturer, String model);
 

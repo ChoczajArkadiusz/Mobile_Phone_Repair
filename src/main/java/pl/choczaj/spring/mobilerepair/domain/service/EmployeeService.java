@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.choczaj.spring.mobilerepair.domain.model.*;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.TaskRepository;
+import pl.choczaj.spring.mobilerepair.domain.repository.UserRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.UserRoleRepository;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeAvailabilityDto;
 import pl.choczaj.spring.mobilerepair.web.dto.EmployeeDto;
@@ -20,12 +21,16 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private PasswordEncoder passwordEncoder;
+    private UserRepository userRepository;
     private UserRoleRepository userRoleRepository;
     private TaskRepository taskRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, TaskRepository taskRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder,
+                           UserRepository userRepository, UserRoleRepository userRoleRepository,
+                           TaskRepository taskRepository) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.taskRepository = taskRepository;
     }
@@ -119,6 +124,70 @@ public class EmployeeService {
                 employee.setHours(employee.getHours() - reduceTime);
             }
         }
+    }
+
+    public void initWithDemoEmployees() {
+        Employee[] demoEmployees = new Employee[3];
+        for (int i = 0; i < demoEmployees.length; i++) {
+            demoEmployees[i] = new Employee();
+        }
+        demoEmployees[0].setFirstName("Jan");
+        demoEmployees[0].setLastName("Nowak");
+        demoEmployees[0].setEmail("jan.nowak@mobile.pl");
+        demoEmployees[0].setWorkHourCost(75.0);
+        demoEmployees[0].setPhone("+48 654654654");
+        demoEmployees[0].setAddress("Wrocław, ul. Prosta 1");
+
+        demoEmployees[1].setFirstName("Tomasz");
+        demoEmployees[1].setLastName("Kowal");
+        demoEmployees[1].setEmail("tomasz.kowal@mobile.pl");
+        demoEmployees[1].setWorkHourCost(80.0);
+        demoEmployees[1].setPhone("+48 698698698");
+        demoEmployees[1].setAddress("Wrocław, ul. Krzywa 12/4");
+
+        demoEmployees[2].setFirstName("Anna");
+        demoEmployees[2].setLastName("Kowalska");
+        demoEmployees[2].setEmail("anna.kowalska@mobile.pl");
+        demoEmployees[2].setWorkHourCost(89.0);
+        demoEmployees[2].setPhone("+48 612126612");
+        demoEmployees[2].setAddress("Wrocław, ul. Kręta 2/14");
+
+        for (Employee employee : demoEmployees) {
+            employee.setPassword(passwordEncoder.encode("demo"));
+            employee.setEnabled(true);
+            userRepository.save(employee);
+            UserRole employeeRole = new UserRole();
+            employeeRole.setRole(UserRoleEnum.ROLE_EMPLOYEE);
+            employeeRole.setUser(employee);
+            userRoleRepository.save(employeeRole);
+        }
+    }
+
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
+
+    public void initWithDemoManagers() {
+        Employee demoManager = new Employee();
+        demoManager.setFirstName("Marcin");
+        demoManager.setLastName("Janik");
+        demoManager.setEmail("marcin.janik@mobile.pl");
+        demoManager.setWorkHourCost(89.0);
+        demoManager.setPhone("+48 632632632");
+        demoManager.setAddress("Wrocław, ul. Kwiatowa 43/1");
+        demoManager.setPassword(passwordEncoder.encode("demo"));
+        demoManager.setEnabled(true);
+        userRepository.save(demoManager);
+
+        UserRole managerRole = new UserRole();
+        managerRole.setRole(UserRoleEnum.ROLE_MANAGER);
+        managerRole.setUser(demoManager);
+        userRoleRepository.save(managerRole);
+
+        UserRole employeeRole = new UserRole();
+        employeeRole.setRole(UserRoleEnum.ROLE_EMPLOYEE);
+        employeeRole.setUser(demoManager);
+        userRoleRepository.save(employeeRole);
     }
 
 
