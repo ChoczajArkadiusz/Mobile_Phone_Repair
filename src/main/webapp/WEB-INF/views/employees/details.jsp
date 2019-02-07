@@ -51,7 +51,7 @@
             </td>
             <td>
                 <a href="/employees/form/${employee.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                <a href="/employees/${employee.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                <a href="/employees/${employee.id}/confirm-delete" class="btn btn-xs btn-warning disabled">Usuń</a>
             </td>
         </tr>
         </tbody>

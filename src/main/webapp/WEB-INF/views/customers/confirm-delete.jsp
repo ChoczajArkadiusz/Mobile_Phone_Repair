@@ -47,6 +47,10 @@
         </tr>
         </tbody>
     </table>
+    <div>
+        <p class="alert alert-danger" role="alert"><strong>Usunięcie użytkownika spowoduje również usunięcie wszystkich
+            urządzeń powiązanych z użytkownikiem i wszystkich zadań przypisanych do każdego z urządzeń.</strong></p>
+    </div>
     <table>
         <tr>
             <td><a href="/customers" class="btn btn-primary" style="margin: 10px">Anuluj</a></td>

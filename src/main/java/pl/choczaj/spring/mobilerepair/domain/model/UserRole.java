@@ -16,7 +16,7 @@ public class UserRole {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.choczaj.spring.mobilerepair.domain.model.*;
 import pl.choczaj.spring.mobilerepair.domain.repository.*;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CustomerService {
@@ -13,16 +15,31 @@ public class CustomerService {
     private CustomerRepository customerRepository;
     private UserRoleRepository userRoleRepository;
     private PasswordEncoder passwordEncoder;
+    private DeviceRepository deviceRepository;
+    private TaskRepository taskRepository;
 
     public CustomerService(CustomerRepository customerRoleRepository, UserRoleRepository userRoleRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder, DeviceRepository deviceRepository, TaskRepository taskRepository) {
         this.customerRepository = customerRoleRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.deviceRepository = deviceRepository;
+        this.taskRepository = taskRepository;
+    }
+
+    public void delete(Customer customer) {
+        List<Device> devices = deviceRepository.findAllByOwnerId(customer.getId());
+        for (Device device : devices) {
+            List<Task> tasks = taskRepository.findAllByDeviceId(device.getId());
+            for (Task task : tasks) {
+                taskRepository.delete(task);
+            }
+            deviceRepository.delete(device);
+        }
+        customerRepository.delete(customer);
     }
 
     public void deleteAll() {
-        userRoleRepository.deleteAll();
         customerRepository.deleteAll();
     }
 

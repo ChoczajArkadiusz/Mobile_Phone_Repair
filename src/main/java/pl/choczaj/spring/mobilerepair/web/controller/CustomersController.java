@@ -11,6 +11,7 @@ import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
 import pl.choczaj.spring.mobilerepair.domain.repository.CustomerRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.DeviceRepository;
 import pl.choczaj.spring.mobilerepair.domain.repository.UserRoleRepository;
+import pl.choczaj.spring.mobilerepair.domain.service.CustomerService;
 import pl.choczaj.spring.mobilerepair.email.EmailSender;
 
 import javax.validation.Valid;
@@ -22,14 +23,16 @@ import java.util.List;
 public class CustomersController {
 
     private CustomerRepository customerRepository;
+    private CustomerService customerService;
     private DeviceRepository deviceRepository;
     private PasswordEncoder passwordEncoder;
     private UserRoleRepository userRoleRepository;
     private final EmailSender emailSender;
 
-    public CustomersController(CustomerRepository customerRepository, DeviceRepository deviceRepository,
+    public CustomersController(CustomerRepository customerRepository, CustomerService customerService, DeviceRepository deviceRepository,
                                PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, EmailSender emailSender) {
         this.customerRepository = customerRepository;
+        this.customerService = customerService;
         this.deviceRepository = deviceRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
@@ -107,8 +110,7 @@ public class CustomersController {
     public String delete(@PathVariable Long id) {
         Customer customer = customerRepository.findById(id).orElse(null);
         if (customer != null) {
-            customer.getDevices().stream().forEach(d -> deviceRepository.delete(d));
-            customerRepository.delete(customer);
+            customerService.delete(customer);
         }
         return "redirect:/customers";
     }

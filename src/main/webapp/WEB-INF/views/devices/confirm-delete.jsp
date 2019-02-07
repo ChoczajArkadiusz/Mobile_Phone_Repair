@@ -39,6 +39,10 @@
         </tr>
         </tbody>
     </table>
+    <div>
+        <p class="alert alert-danger" role="alert"><strong>Usunięcie urządzenia spowoduje również usunięcie wszystkich
+            zadań przypisanych do tego urządzenia.</strong></p>
+    </div>
     <table>
         <tr>
             <td><a href="/devices" class="btn btn-primary" style="margin: 10px">Anuluj</a></td>

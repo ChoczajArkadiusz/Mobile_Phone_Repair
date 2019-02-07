@@ -71,6 +71,10 @@ public class DeviceService {
     public void delete(DeviceDto deviceDto) {
         Device device = new Device();
         if (deviceDto != null) {
+            List<Task> tasks = taskRepository.findAllByDeviceId(deviceDto.getId());
+            for (Task task : tasks) {
+                taskRepository.delete(task);
+            }
             device.setId(deviceDto.getId());
             deviceRepository.delete(device);
         }
