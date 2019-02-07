@@ -5,7 +5,7 @@
 <nav class="navbar navbar-inverse" style="margin: 3px">
     <div class="container-fluid m-5">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Mobile Repair</a>
+            <a class="navbar-brand" href="/">Mobile Phone Repair</a>
         </div>
         <sec:authorize access="hasRole('ROLE_MANAGER') or hasRole('ROLE_EMPLOYEE')">
             <ul class="nav navbar-nav">

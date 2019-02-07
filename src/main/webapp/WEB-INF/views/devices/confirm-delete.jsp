@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Potwierdź usunięcie</title>
+    <title>Mobile Repair | Urządzenia - Potwierdź usunięcie</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,7 +29,7 @@
             <td>Właściciel</td>
         </tr>
         </thead>
-        <tbody id="employeesTab">
+        <tbody>
         <tr>
             <td>${toRemove.id}</td>
             <td>${toRemove.manufacturer}</td>
@@ -39,13 +39,10 @@
         </tr>
         </tbody>
     </table>
-    <br>
-    <br>
-    <br>
-    <table cellpadding="50" cellspacing="20" align="center">
+    <table>
         <tr>
-            <td><a href="/devices" class="btn btn-primary">Anuluj</a></td>
-            <td><a href="/devices/${toRemove.id}/delete" class="btn btn-danger">Usuń</a></td>
+            <td><a href="/devices" class="btn btn-primary" style="margin: 10px">Anuluj</a></td>
+            <td><a href="/devices/${toRemove.id}/delete" class="btn btn-danger" style="margin: 10px">Usuń</a></td>
         </tr>
     </table>
 </div>

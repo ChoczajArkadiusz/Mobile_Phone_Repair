@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Szczegóły</title>
+    <title>Mobile Repair | Pracownicy - Szczegóły</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -23,6 +23,8 @@
             <td>Imię</td>
             <td>Naziwsko</td>
             <td>Email</td>
+            <td>Telefon</td>
+            <td>Adres</td>
             <td>Grupy</td>
             <td>Koszt roboczogodziny [zł]</td>
             <td>Status konta</td>
@@ -35,6 +37,8 @@
             <td>${employee.firstName}</td>
             <td>${employee.lastName}</td>
             <td>${employee.email}</td>
+            <td>${employee.phone}</td>
+            <td>${employee.address}</td>
             <td>
                 <c:forEach items="${employee.roles}" var="role" varStatus="j">
                     ${role.role.name()}<br>
@@ -52,7 +56,6 @@
         </tr>
         </tbody>
     </table>
-    <br>
     <br>
     <br>
     <br>
@@ -80,18 +83,17 @@
                         <td>Opcje</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tasksTab">
                     <c:forEach items="${tasks}" var="task" varStatus="i">
                         <tr>
-                            <td>${task.registrationDate}</td>
+                            <td>${task.registrationDate.toLocalDate()} ${task.registrationDate.toLocalTime()}</td>
                             <td>${task.scheduledRepairDate}</td>
                             <td>${task.device.manufacturer} ${task.device.model} </td>
                             <td>${task.device.owner.email}</td>
                             <td>${task.problemDescription}</td>
                             <td>${task.status.name()}</td>
                             <td>
-                                <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                                <a href="/tasks/${task.id}/details" class="btn btn-xs btn-info disabled">Szczegóły</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -101,5 +103,17 @@
         </c:if>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#searchPhrase").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tasksTab tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Części zamienne</title>
+    <title>Mobile Repair | Urządzenia</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,7 +39,6 @@
                 <thead>
                 <tr>
                     <td>Lp.</td>
-                    <td>ID</td>
                     <td>Producent</td>
                     <td>Model</td>
                     <td>Opis</td>
@@ -47,11 +46,10 @@
                     <td>Opcje</td>
                 </tr>
                 </thead>
-                <tbody id="employeesTab">
+                <tbody id="devicesTab">
                 <c:forEach items="${devices}" var="device" varStatus="i">
                     <tr>
                         <td>${i.index + 1}</td>
-                        <td>${device.id}</td>
                         <td>${device.manufacturer}</td>
                         <td>${device.model}</td>
                         <td>${device.description}</td>
@@ -67,7 +65,6 @@
     </c:if>
     <sec:authorize access="hasRole('ROLE_MANAGER')">
     <div align="center">
-        <hr>
         <a href="/devices/add" class="btn btn-primary">Dodaj nowe urządzenie</a>
     </div>
     </sec:authorize>
@@ -77,7 +74,7 @@
     $(document).ready(function () {
         $("#searchPhrase").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#employeesTab tr").filter(function () {
+            $("#devicesTab tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });

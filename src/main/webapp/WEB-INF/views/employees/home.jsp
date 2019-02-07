@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Homepage</title>
+    <title>Mobile Repair | Pracownicy - Homepage</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -40,10 +40,10 @@
                         <td>Zmiana statusu</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tasksTab">
                     <c:forEach items="${tasks}" var="task" varStatus="i">
                         <tr>
-                            <td>${task.registrationDate}</td>
+                            <td>${task.registrationDate.toLocalDate()} ${task.registrationDate.toLocalTime()}</td>
                             <td>${task.scheduledRepairDate}</td>
                             <td>${task.device.manufacturer} ${task.device.model} </td>
                             <td>${task.device.owner.email}</td>
@@ -74,5 +74,17 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#searchPhrase").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tasksTab tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Szczegóły</title>
+    <title>Mobile Repair | Urządzenia - Szczegóły</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -69,18 +69,17 @@
                         <td>Opcje</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tasksTab">
                     <c:forEach items="${tasks}" var="task" varStatus="i">
                         <tr>
-                            <td>${task.registrationDate}</td>
+                            <td>${task.registrationDate.toLocalDate()} ${task.registrationDate.toLocalTime()}</td>
                             <td>${task.scheduledRepairDate}</td>
                             <td>${task.employee.email}</td>
                             <td>${task.problemDescription}</td>
                             <td>${task.status.name()}</td>
                             <td>
                                 <sec:authorize access="hasRole('ROLE_MANAGER')">
-                                    <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                    <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                                    <a href="/tasks/${task.id}/details" class="btn btn-xs btn-info disabled">Szczegóły</a>
                                 </sec:authorize>
                             </td>
                         </tr>
@@ -93,7 +92,6 @@
 
     <sec:authorize access="hasRole('ROLE_MANAGER')">
         <div align="center">
-            <hr>
             <form:form modelAttribute="device" action="/tasks/add" method="post">
                 <form:hidden path="id"/>
                 <form:hidden path="manufacturer"/>
@@ -106,5 +104,17 @@
     </sec:authorize>
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#searchPhrase").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tasksTab tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

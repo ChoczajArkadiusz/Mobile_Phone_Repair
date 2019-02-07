@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Mobile Repair</title>
+    <title>Mobile Repair | Pracownicy - formularz</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
 <jsp:include page="../header.jsp"/>
 
 <div class="container" align="center">
-    <h2>Dodawanie/edycja pracownika</h2>
+    <h2>Edycja danych pracownika</h2>
     <div>
         <form:form modelAttribute="employeeDto" method="post" action="/employees/form/edit" cssClass="form-horizontal">
             <form:hidden path="id"/>

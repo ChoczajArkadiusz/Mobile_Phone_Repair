@@ -1,10 +1,11 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Części zamienne</title>
+    <title>Mobile Repair | Zadania</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -43,7 +44,7 @@
                 <tbody id="employeesTab">
                 <c:forEach items="${tasks}" var="task" varStatus="i">
                     <tr>
-                        <td>${task.registrationDate}</td>
+                        <td>${task.registrationDate.toLocalDate()} ${task.registrationDate.toLocalTime()}</td>
                         <td>${task.scheduledRepairDate}</td>
                         <td>${task.employee.email}</td>
                         <td>${task.device.manufacturer} ${task.device.model} </td>
@@ -51,8 +52,7 @@
                         <td>${task.problemDescription}</td>
                         <td>${task.status.name()}</td>
                         <td>
-                            <a href="/tasks/${task.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                            <a href="/tasks/${task.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
+                            <a href="/tasks/${task.id}/details" class="btn btn-xs btn-info disabled">Szczegóły</a>
                         </td>
                     </tr>
                 </c:forEach>

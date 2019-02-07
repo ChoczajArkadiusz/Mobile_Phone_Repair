@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Mobile Repair</title>
+    <title>Mobile Repair | Klienci</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -49,10 +49,10 @@
                 <thead>
                 <tr>
                     <td>Lp.</td>
-                    <td>ID</td>
                     <td>Imię</td>
                     <td>Naziwsko</td>
                     <td>Email</td>
+                    <td>Adres</td>
                     <td>Urządzenia</td>
                     <td>Opcje</td>
                 </tr>
@@ -61,10 +61,10 @@
                 <c:forEach items="${customers}" var="customer" varStatus="i">
                     <tr>
                         <td>${i.index + 1}</td>
-                        <td>${customer.id}</td>
                         <td>${customer.firstName}</td>
                         <td>${customer.lastName}</td>
                         <td>${customer.email}</td>
+                        <td>${customer.address}</td>
                         <td>
                             <c:forEach items="${customer.devices}" var="device" varStatus="j">
                                 ${device.manufacturer} ${device.model} <br>
@@ -85,7 +85,6 @@
     </c:if>
     <sec:authorize access="hasRole('ROLE_MANAGER')">
         <div align="center">
-            <hr>
             <a href="/customers/add" class="btn btn-primary">Dodaj nowego klienta</a>
         </div>
     </sec:authorize>

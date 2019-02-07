@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Części zamienne</title>
+    <title>Mobile Repair | Części zamienne</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,7 +39,6 @@
                 <thead>
                 <tr>
                     <td>Lp.</td>
-                    <td>ID</td>
                     <td>Producent</td>
                     <td>Model</td>
                     <td>Typ</td>
@@ -55,7 +54,6 @@
                 <c:forEach items="${parts}" var="part" varStatus="i">
                     <tr>
                         <td>${i.index + 1}</td>
-                        <td>${part.id}</td>
                         <td>${part.manufacturer}</td>
                         <td>${part.model}</td>
                         <td>${part.type}</td>
@@ -78,7 +76,6 @@
     </c:if>
     <sec:authorize access="hasRole('ROLE_MANAGER')">
         <div align="center">
-            <hr>
             <a href="/parts/add" class="btn btn-primary">Dodaj nową część</a>
         </div>
     </sec:authorize>

@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Mobile Repair</title>
+    <title>Mobile Repair | Zadania - formularz</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=task-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -66,28 +66,26 @@
         <c:if test="${not empty taskDto.parts}">
             <div align="center">
                 <p>Wyszukaj w tabeli:</p>
-                <input class="form-control" id="searchPhrase" type="text" placeholder="szukana fraza..">
+                <input class="form-control" id="searchPhrase2" type="text" placeholder="szukana fraza..">
                 <br>
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <td>Lp.</td>
-                        <td>ID</td>
                         <td>Producent</td>
                         <td>Model</td>
                         <td>Typ</td>
                         <td>Opis</td>
                         <td>Numer seryjny</td>
-                        <td>Ilość</td>
-                        <td>Cena</td>
-                        <td>Czas wymiany</td>
+                        <td>Ilość [szt.]</td>
+                        <td>Cena [zł]</td>
+                        <td>Czas wymiany [h]</td>
                     </tr>
                     </thead>
                     <tbody id="partsTab">
                     <c:forEach items="${taskDto.parts}" var="part" varStatus="i">
                         <tr>
                             <td>${i.index + 1}</td>
-                            <td>${part.id}</td>
                             <td>${part.manufacturer}</td>
                             <td>${part.model}</td>
                             <td>${part.type}</td>
@@ -122,7 +120,6 @@
                 <thead>
                 <tr>
                     <td>Lp.</td>
-                    <td>ID</td>
                     <td>Email</td>
                     <td>Koszt roboczogodziny [zł]</td>
                     <td>Dostępność [h]</td>
@@ -132,7 +129,6 @@
                 <c:forEach items="${employees}" var="employee" varStatus="i">
                     <tr>
                         <td>${i.index + 1}</td>
-                        <td>${employee.id}</td>
                         <td>${employee.email}</td>
                         <td>${employee.workHourCost}</td>
                         <td>${employee.hours}</td>
@@ -155,7 +151,16 @@
     });
 </script>
 
-
+<script>
+    $(document).ready(function () {
+        $("#searchPhrase2").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#partsTab tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
