@@ -16,7 +16,7 @@ public class UserRole {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
 
