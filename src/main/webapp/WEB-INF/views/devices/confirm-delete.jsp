@@ -45,7 +45,7 @@
     </div>
     <table>
         <tr>
-            <td><a href="/devices" class="btn btn-primary" style="margin: 10px">Anuluj</a></td>
+            <td><a href="/devices/${toRemove.id}/details" class="btn btn-primary" style="margin: 10px">Anuluj</a></td>
             <td><a href="/devices/${toRemove.id}/delete" class="btn btn-danger" style="margin: 10px">Usuń</a></td>
         </tr>
     </table>
