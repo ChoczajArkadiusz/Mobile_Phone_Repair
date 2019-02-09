@@ -4,6 +4,7 @@ import pl.choczaj.spring.mobilerepair.domain.model.Device;
 import pl.choczaj.spring.mobilerepair.domain.model.Part;
 import pl.choczaj.spring.mobilerepair.domain.model.TaskStatus;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class TaskDto {
     private LocalDateTime repairEndDate;
     private LocalDateTime deliveryDate;
     private String employeeEmail;
+
+    @Size(min = 10, max = 500)
     private String problemDescription;
     private String repairDescription;
     private Device device;
