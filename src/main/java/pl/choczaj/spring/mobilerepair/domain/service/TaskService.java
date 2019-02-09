@@ -108,7 +108,7 @@ public class TaskService {
         demoTasks[6].setDevice(deviceRepository.findByModelAndDescription("S7", "czarny").get());
         demoTasks[6].setPart(partRepository.findBySerialNumber("459465437").get());
         demoTasks[6].setEmployee(employeeRepository.findByEmail("anna.kowalska@mobile.pl").get());
-        demoTasks[6].setProblemDescription("nie dizała digitizer");
+        demoTasks[6].setProblemDescription("nie działa digitizer");
 
         demoTasks[7].setDevice(deviceRepository.findByModelAndDescription("S7", "biały, czarne etui").get());
         demoTasks[7].setPart(partRepository.findBySerialNumber("459498784").get());

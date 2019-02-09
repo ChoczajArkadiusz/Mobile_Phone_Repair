@@ -12,7 +12,7 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
 
     Optional<UserRole> findById(Long id);
 
-    List<UserRole> findByUserId(Long id);
+    List<UserRole> findAllByUserId(Long id);
 
 
 }

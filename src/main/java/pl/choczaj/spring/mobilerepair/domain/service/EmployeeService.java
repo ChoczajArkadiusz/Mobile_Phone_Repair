@@ -48,7 +48,7 @@ public class EmployeeService {
             employeeDto.setPhone(employee.getPhone());
             employeeDto.setAddress(employee.getAddress());
             employeeDto.setWorkHourCost(employee.getWorkHourCost());
-            employeeDto.setRoles(userRoleRepository.findByUserId(id).stream().map(r -> r.getRole()).collect(Collectors.toList()));
+            employeeDto.setRoles(userRoleRepository.findAllByUserId(id).stream().map(r -> r.getRole()).collect(Collectors.toList()));
             employeeDto.setEnabled(employee.isEnabled());
         }
         return employeeDto;
@@ -74,7 +74,7 @@ public class EmployeeService {
             employee.setWorkHourCost(employeeDto.getWorkHourCost());
             employeeRepository.save(employee);
 
-            employee.setRoles(userRoleRepository.findByUserId(employee.getId()));
+            employee.setRoles(userRoleRepository.findAllByUserId(employee.getId()));
             for (UserRoleEnum roleName : employeeDto.getRoles()) {
                 if (!employee.hasRole(roleName)) {
                     UserRole userRole = new UserRole();
