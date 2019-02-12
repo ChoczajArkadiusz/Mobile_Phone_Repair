@@ -115,6 +115,25 @@ public class CustomersController {
         return "redirect:/customers";
     }
 
+    @GetMapping("/{id:[1-9]*[0-9]+}/confirm-anonymize")
+    public String confirmAnonymize(@PathVariable Long id, Model model) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer == null) {
+            return "redirect:/customers/";
+        }
+        model.addAttribute("toAnonymize", customer);
+        return "customers/confirm-anonymize";
+    }
+
+    @GetMapping("/{id:[1-9]*[0-9]+}/anonymize")
+    public String anonymize(@PathVariable Long id) {
+        boolean success = customerService.anonymize(id);
+        if (success) {
+            return "redirect:/customers/?edited";
+        }
+        return "redirect:/customers/?failed";
+    }
+
     private String prepareWelcomeEmail(@ModelAttribute("customer") @Valid Customer customer, String pass) {
         StringBuilder sb = new StringBuilder();
         sb.append("Witaj <b>").append(customer.getFirstName()).append(" ")

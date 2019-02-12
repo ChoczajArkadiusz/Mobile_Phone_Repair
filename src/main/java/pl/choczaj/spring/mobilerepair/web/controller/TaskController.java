@@ -10,9 +10,11 @@ import pl.choczaj.spring.mobilerepair.domain.model.TaskStatus;
 import pl.choczaj.spring.mobilerepair.domain.service.EmployeeService;
 import pl.choczaj.spring.mobilerepair.domain.service.TaskService;
 import pl.choczaj.spring.mobilerepair.email.EmailSender;
+import pl.choczaj.spring.mobilerepair.web.dto.EmployeeAvailabilityDto;
 import pl.choczaj.spring.mobilerepair.web.dto.TaskDto;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -41,12 +43,13 @@ public class TaskController {
         Task task = taskService.findById(id);
         if (task != null) {
             task.setStatus(status);
+            if (status.equals(TaskStatus.REPAIRED)) {
+                task.setRepairEndDate(LocalDateTime.now());
+                emailSender.sendEmail("programmingTestReceive@gmail.com",
+                        "Mobile Repair - Urządzenie gotowe do odbioru", prepareReadyForPickUpEmail(task));
+            }
+            taskService.save(task);
         }
-        if (status.equals(TaskStatus.REPAIRED)) {
-            emailSender.sendEmail("programmingTestReceive@gmail.com",
-                    "Mobile Repair - Urządzenie gotowe do odbioru", prepareReadyForPickUpEmail(task));
-        }
-        taskService.save(task);
         return "redirect:/";
     }
 
@@ -58,8 +61,10 @@ public class TaskController {
     }
 
     @PostMapping({"/new"})
-    public String save(@ModelAttribute("taskDto") @Valid TaskDto taskDto, BindingResult result) {
+    public String save(@ModelAttribute("taskDto") @Valid TaskDto taskDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("taskDto", taskDto);
+            model.addAttribute("employees", employeeService.findAvailableEmployees());
             return "tasks/form";
         }
         taskService.save(taskDto);

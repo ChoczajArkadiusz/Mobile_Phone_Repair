@@ -13,6 +13,7 @@ import pl.choczaj.spring.mobilerepair.web.dto.EmployeeDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -190,5 +191,21 @@ public class EmployeeService {
         userRoleRepository.save(employeeRole);
     }
 
+    public boolean anonymize(Long id) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee != null) {
+            Random rand = new Random();
+            String randName = String.format("anonim%09d", rand.nextInt(1000000000));
+            employee.setFirstName(randName);
+            employee.setLastName(randName);
+            employee.setEmail(String.format("%s@mobile.pl", randName));
+            employee.setPhone("000000000");
+            employee.setAddress("-");
+            employee.setEnabled(false);
+            employeeRepository.save(employee);
+            return true;
+        }
+        return false;
+    }
 
 }

@@ -17,7 +17,7 @@
 <div class="container" align="center">
     <h2>Dodawanie nowego pracownika</h2>
     <div>
-        <form:form modelAttribute="employeeDto" method="post" action="/employees/form" cssClass="form-horizontal">
+        <form:form modelAttribute="employeeDto" method="post" action="/employees/form" cssClass="form-horizontal" acceptCharset="UTF-8">
             <form:hidden path="id"/>
             <div class="form-group">
                 <label class="control-label col-sm-4" for="firstName">Imię:</label>

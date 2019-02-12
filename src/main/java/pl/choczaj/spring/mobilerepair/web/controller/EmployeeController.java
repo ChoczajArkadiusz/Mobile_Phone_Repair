@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.choczaj.spring.mobilerepair.domain.model.Customer;
 import pl.choczaj.spring.mobilerepair.domain.model.Employee;
 import pl.choczaj.spring.mobilerepair.domain.model.UserRoleEnum;
 import pl.choczaj.spring.mobilerepair.domain.repository.EmployeeRepository;
@@ -78,6 +79,25 @@ public class EmployeeController {
             employeeRepository.delete(employee);
         }
         return "redirect:/employees";
+    }
+
+    @GetMapping("/{id:[1-9]*[0-9]+}/confirm-anonymize")
+    public String confirmAnonymize(@PathVariable Long id, Model model) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee == null) {
+            return "redirect:/employees/";
+        }
+        model.addAttribute("toAnonymize", employee);
+        return "employees/confirm-anonymize";
+    }
+
+    @GetMapping("/{id:[1-9]*[0-9]+}/anonymize")
+    public String anonymize(@PathVariable Long id) {
+        boolean success = employeeService.anonymize(id);
+        if (success) {
+            return "redirect:/employees/?edited";
+        }
+        return "redirect:/employees/?failed";
     }
 
 

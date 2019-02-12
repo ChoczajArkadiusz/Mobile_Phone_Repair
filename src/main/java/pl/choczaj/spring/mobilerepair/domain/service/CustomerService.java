@@ -7,6 +7,7 @@ import pl.choczaj.spring.mobilerepair.domain.model.*;
 import pl.choczaj.spring.mobilerepair.domain.repository.*;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -19,12 +20,30 @@ public class CustomerService {
     private TaskRepository taskRepository;
 
     public CustomerService(CustomerRepository customerRoleRepository, UserRoleRepository userRoleRepository,
-                           PasswordEncoder passwordEncoder, DeviceRepository deviceRepository, TaskRepository taskRepository) {
+                           PasswordEncoder passwordEncoder, DeviceRepository deviceRepository,
+                           TaskRepository taskRepository) {
         this.customerRepository = customerRoleRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.deviceRepository = deviceRepository;
         this.taskRepository = taskRepository;
+    }
+
+    public boolean anonymize(Long id) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null) {
+            Random rand = new Random();
+            String randName = String.format("anonim%09d", rand.nextInt(1000000000));
+            customer.setFirstName(randName);
+            customer.setLastName(randName);
+            customer.setEmail(String.format("%s@mobile.pl", randName));
+            customer.setPhone("000000000");
+            customer.setAddress("-");
+            customer.setEnabled(false);
+            customerRepository.save(customer);
+            return true;
+        }
+        return false;
     }
 
     public void delete(Customer customer) {

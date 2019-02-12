@@ -31,6 +31,14 @@
         </div>
     </div>
 </c:if>
+<c:if test="${param.failed != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">
+            <strong>Niepowodzenie wykonania operacji</strong>
+        </div>
+    </div>
+</c:if>
 
 <div class="container" align="center">
     <h2>Lista klientów</h2>
@@ -73,8 +81,8 @@
                         <td>
                             <sec:authorize access="hasRole('ROLE_MANAGER')">
                                 <a href="/customers/${customer.id}/edit" class="btn btn-xs btn-primary">Edytuj</a>
-                                <a href="/customers/${customer.id}/confirm-delete"
-                                   class="btn btn-xs btn-warning">Usuń</a>
+                                <a href="/customers/${customer.id}/confirm-anonymize" class="btn btn-xs btn-warning">Anonimizuj</a>
+                                <a href="/customers/${customer.id}/confirm-delete" class="btn btn-xs btn-warning">Usuń</a>
                             </sec:authorize>
                         </td>
                     </tr>

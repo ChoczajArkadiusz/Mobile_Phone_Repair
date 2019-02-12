@@ -26,6 +26,14 @@
         <div class="alert alert-success"> Pomyślnie <strong>zmieniono dane pracownika!</strong></div>
     </div>
 </c:if>
+<c:if test="${param.failed != null}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success">
+            <strong>Niepowodzenie wykonania operacji</strong>
+        </div>
+    </div>
+</c:if>
 
 <div class="container" align="center">
     <h2>Lista pracowników</h2>
